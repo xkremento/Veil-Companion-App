@@ -9,8 +9,6 @@
     <string name="add_friend_string">Add Friend</string>
     <string name="friends_screen_string">Amigos</string>
     <string name="credits">By Alvaro F., Kida G. y Ahmed H.</string>
-
-    <!-- Strings adicionales para la HomeScreen -->
     <string name="friends_string">Amigos</string>
     <string name="points_string">Puntos</string>
     <string name="coins_string">Pesos</string>
@@ -18,6 +16,17 @@
     <string name="duration_string">Duración</string>
     <string name="winner_string">Ganador</string>
     <string name="reward_string">Recompensa</string>
-    <string name="profile_image_string">Imagen de perfil</string>
     <string name="no_games_string">No hay partidas recientes</string>
+    <string name="delete_friend_string">Eliminar amigo</string>
+    <string name="no_friends_string">No tienes amigos añadidos</string>
+    <string name="requests_string">Solicitudes</string>
+    <string name="profile_image_string">Imagen de perfil</string>
+    <string name="friend_requests_string">Solicitudes de amistad</string>
+    <string name="accept_request_string">Aceptar solicitud</string>
+    <string name="reject_request_string">Rechazar solicitud</string>
+    <string name="no_friend_requests_string">No tienes solicitudes de amistad pendientes</string>
+    <string name="email_string">Email</string>
+    <string name="password_string">Contraseña</string>
+    <string name="show_password_string">Mostrar contraseña</string>
+    <string name="hide_password_string">Ocultar contraseña</string>
 </resources>

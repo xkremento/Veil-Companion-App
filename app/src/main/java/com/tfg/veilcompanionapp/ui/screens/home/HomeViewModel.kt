@@ -3,6 +3,7 @@ package com.tfg.veilcompanionapp.ui.screens.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tfg.veilcompanionapp.domain.model.Game
+import com.tfg.veilcompanionapp.utils.DummyDataProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -44,7 +45,7 @@ class HomeViewModel @Inject constructor(
                 // val user = playerRepository.getCurrentUserProfile()
 
                 // Simulación para desarrollo
-                val user = DummyData.getDummyUser()
+                val user = DummyDataProvider.getDummyUser()
 
                 _uiState.update { currentState ->
                     currentState.copy(
@@ -74,7 +75,7 @@ class HomeViewModel @Inject constructor(
                 // val gamesList = gameRepository.getUserGames()
 
                 // Simulación para desarrollo
-                val gamesList = DummyData.getDummyGames()
+                val gamesList = DummyDataProvider.getDummyGames()
 
                 _uiState.update { currentState ->
                     currentState.copy(games = gamesList)
@@ -93,42 +94,4 @@ class HomeViewModel @Inject constructor(
         loadUserData()
         loadGames()
     }
-}
-
-// Clase temporal para datos de prueba
-private object DummyData {
-    data class DummyUser(
-        val username: String,
-        val profileImageUrl: String?,
-        val points: Int,
-        val friends: Int,
-        val coins: Int
-    )
-
-    fun getDummyUser() = DummyUser(
-        username = "Username",
-        profileImageUrl = null,
-        points = 100,
-        friends = 5,
-        coins = 200
-    )
-
-    fun getDummyGames() = listOf(
-        Game(
-            id = 1L,
-            date = "01/01/1970",
-            role = "Asesino / Inocente",
-            duration = "01:01",
-            winner = "",
-            reward = "+10 pesos"
-        ),
-        Game(
-            id = 2L,
-            date = "01/01/1970",
-            role = "Asesino / Inocente",
-            duration = "01:01",
-            winner = "",
-            reward = "+10 pesos"
-        )
-    )
 }
