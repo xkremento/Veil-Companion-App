@@ -1,4 +1,4 @@
-package com.tfg.veilcompanionapp
+package com.tfg.veilcompanionapp.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
