@@ -32,4 +32,8 @@
     <string name="add_friend_instruction">Introduce el correo electrónico del usuario al que quieres enviar una solicitud de amistad:</string>
     <string name="send_request_string">Enviar solicitud</string>
     <string name="friend_request_sent">Solicitud de amistad enviada correctamente</string>
+    <string name="nickname_string">Nickname</string>
+    <string name="confirm_password_string">Confirmar contraseña</string>
+    <string name="profile_image_url_string">URL de imagen de perfil (opcional)</string>
+    <string name="optional_fields_info">Los campos marcados como (opcional) no son obligatorios para el registro</string>
 </resources>
