@@ -29,4 +29,7 @@
     <string name="password_string">Contraseña</string>
     <string name="show_password_string">Mostrar contraseña</string>
     <string name="hide_password_string">Ocultar contraseña</string>
+    <string name="add_friend_instruction">Introduce el correo electrónico del usuario al que quieres enviar una solicitud de amistad:</string>
+    <string name="send_request_string">Enviar solicitud</string>
+    <string name="friend_request_sent">Solicitud de amistad enviada correctamente</string>
 </resources>
