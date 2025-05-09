@@ -8,6 +8,7 @@ import com.tfg.veilcompanionapp.data.local.datastore.UserPreferences
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 import javax.inject.Singleton
+import com.tfg.veilcompanionapp.domain.model.Result
 
 @Singleton
 class AuthRepository @Inject constructor(

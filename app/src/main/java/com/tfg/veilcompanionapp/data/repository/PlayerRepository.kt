@@ -5,7 +5,6 @@ import com.tfg.veilcompanionapp.data.api.models.PasswordUpdateDTO
 import com.tfg.veilcompanionapp.data.api.models.ProfileImageDTO
 import com.tfg.veilcompanionapp.domain.model.Player
 import com.tfg.veilcompanionapp.domain.model.Result
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 import javax.inject.Singleton
 
