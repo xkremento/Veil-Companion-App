@@ -1,4 +1,4 @@
-package com.tfg.veilcompanionapp.ui.screens.auth
+package com.tfg.veilcompanionapp.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,9 +26,11 @@ import com.tfg.veilcompanionapp.ui.components.AuthButton
 import com.tfg.veilcompanionapp.ui.theme.VeilBackgroundColor
 import com.tfg.veilcompanionapp.ui.theme.VeilTitleColor
 
-@Preview
 @Composable
-fun AuthScreen(){
+fun AuthScreen(
+    onLoginClick: () -> Unit = {},
+    onRegisterClick: () -> Unit = {}
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -70,14 +73,14 @@ fun AuthScreen(){
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             AuthButton(
                 isLogin = true,
-                onClick = {}
+                onClick = onLoginClick  // Ahora usa el callback para Login
             )
 
             Spacer(modifier = Modifier.height(40.dp))
 
             AuthButton(
                 isLogin = false,
-                onClick = {}
+                onClick = onRegisterClick  // Ahora usa el callback para Register
             )
         }
 
@@ -87,5 +90,13 @@ fun AuthScreen(){
             color = Color.LightGray,
             modifier = Modifier.padding(bottom = 16.dp)
         )
+    }
+}
+
+@Preview
+@Composable
+fun AuthScreenPreview() {
+    MaterialTheme {
+        AuthScreen()
     }
 }
