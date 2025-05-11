@@ -2,6 +2,8 @@ package com.tfg.veilcompanionapp.ui.screens.friends
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tfg.veilcompanionapp.data.repository.FriendRepository
+import com.tfg.veilcompanionapp.domain.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,7 +22,7 @@ data class AddFriendUiState(
 
 @HiltViewModel
 class AddFriendViewModel @Inject constructor(
-    // private val friendRepository: FriendRepository
+    private val friendRepository: FriendRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AddFriendUiState())
@@ -41,23 +43,20 @@ class AddFriendViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
-            try {
-                // Aquí iría la llamada real al repositorio
-                // val requestId = friendRepository.sendFriendRequest(_uiState.value.email)
-
-                // Simulación para desarrollo - esperamos 1 segundo para simular la llamada a la API
-                kotlinx.coroutines.delay(1000)
-
-                // Simulamos que el envío es exitoso solo con fines de desarrollo
-                _uiState.update { it.copy(
-                    isLoading = false,
-                    isRequestSent = true
-                ) }
-            } catch (e: Exception) {
-                _uiState.update { it.copy(
-                    isLoading = false,
-                    errorMessage = "Error al enviar la solicitud: ${e.message}"
-                ) }
+            when (val result = friendRepository.sendFriendRequest(_uiState.value.email)) {
+                is Result.Success -> {
+                    _uiState.update { it.copy(
+                        isLoading = false,
+                        isRequestSent = true
+                    ) }
+                }
+                is Result.Error -> {
+                    _uiState.update { it.copy(
+                        isLoading = false,
+                        errorMessage = "Error al enviar la solicitud: ${result.exception.message}"
+                    ) }
+                }
+                else -> { /* Ignorar estado Loading */ }
             }
         }
     }

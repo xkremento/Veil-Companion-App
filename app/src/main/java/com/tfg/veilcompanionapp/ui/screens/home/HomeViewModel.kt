@@ -2,8 +2,10 @@ package com.tfg.veilcompanionapp.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tfg.veilcompanionapp.data.repository.GameRepository
+import com.tfg.veilcompanionapp.data.repository.PlayerRepository
 import com.tfg.veilcompanionapp.domain.model.Game
-import com.tfg.veilcompanionapp.utils.DummyDataProvider
+import com.tfg.veilcompanionapp.domain.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,8 +27,8 @@ data class HomeUiState(
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    // private val playerRepository: PlayerRepository,
-    // private val gameRepository: GameRepository
+    private val playerRepository: PlayerRepository,
+    private val gameRepository: GameRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
@@ -40,52 +42,52 @@ class HomeViewModel @Inject constructor(
     private fun loadUserData() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            try {
-                // Aquí iría la llamada real al repositorio
-                // val user = playerRepository.getCurrentUserProfile()
 
-                // Simulación para desarrollo
-                val user = DummyDataProvider.getDummyUser()
-
-                _uiState.update { currentState ->
-                    currentState.copy(
-                        isLoading = false,
-                        username = user.username,
-                        profileImageUrl = user.profileImageUrl,
-                        points = user.points,
-                        friends = user.friends,
-                        coins = user.coins
-                    )
+            when (val result = playerRepository.getCurrentPlayer()) {
+                is Result.Success -> {
+                    val player = result.data
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            isLoading = false,
+                            username = player.nickname,
+                            profileImageUrl = player.profileImageUrl,
+                            // Suponiendo que los "points" son 0 en este sistema
+                            points = 0,
+                            // Suponiendo que el número de amigos no está disponible directamente
+                            friends = 0,
+                            coins = player.coins
+                        )
+                    }
                 }
-            } catch (e: Exception) {
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        error = "Error al cargar los datos del usuario: ${e.message}"
-                    )
+                is Result.Error -> {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            error = "Error al cargar los datos del usuario: ${result.exception.message}"
+                        )
+                    }
                 }
+                else -> { /* Ignorar estado Loading */ }
             }
         }
     }
 
     private fun loadGames() {
         viewModelScope.launch {
-            try {
-                // Aquí iría la llamada real al repositorio
-                // val gamesList = gameRepository.getUserGames()
-
-                // Simulación para desarrollo
-                val gamesList = DummyDataProvider.getDummyGames()
-
-                _uiState.update { currentState ->
-                    currentState.copy(games = gamesList)
+            when (val result = gameRepository.getUserGames()) {
+                is Result.Success -> {
+                    _uiState.update { currentState ->
+                        currentState.copy(games = result.data)
+                    }
                 }
-            } catch (e: Exception) {
-                _uiState.update {
-                    it.copy(
-                        error = "Error al cargar las partidas: ${e.message}"
-                    )
+                is Result.Error -> {
+                    _uiState.update {
+                        it.copy(
+                            error = "Error al cargar las partidas: ${result.exception.message}"
+                        )
+                    }
                 }
+                else -> { /* Ignorar estado Loading */ }
             }
         }
     }

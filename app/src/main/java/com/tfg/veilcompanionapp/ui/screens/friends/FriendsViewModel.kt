@@ -2,8 +2,9 @@ package com.tfg.veilcompanionapp.ui.screens.friends
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tfg.veilcompanionapp.data.repository.FriendRepository
 import com.tfg.veilcompanionapp.domain.model.Friend
-import com.tfg.veilcompanionapp.utils.DummyDataProvider
+import com.tfg.veilcompanionapp.domain.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,7 +21,7 @@ data class FriendsUiState(
 
 @HiltViewModel
 class FriendsViewModel @Inject constructor(
-    // private val friendRepository: FriendRepository
+    private val friendRepository: FriendRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(FriendsUiState())
@@ -33,43 +34,43 @@ class FriendsViewModel @Inject constructor(
     private fun loadFriends() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            try {
-                // Aquí iría la llamada real al repositorio
-                // val friendsList = friendRepository.getFriends()
 
-                // Simulación para desarrollo
-                val friendsList = DummyDataProvider.getDummyFriends()
-
-                _uiState.update { currentState ->
-                    currentState.copy(
-                        isLoading = false,
-                        friends = friendsList
-                    )
+            when (val result = friendRepository.getFriends()) {
+                is Result.Success -> {
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            isLoading = false,
+                            friends = result.data
+                        )
+                    }
                 }
-            } catch (e: Exception) {
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        error = "Error al cargar los amigos: ${e.message}"
-                    )
+                is Result.Error -> {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            error = "Error al cargar los amigos: ${result.exception.message}"
+                        )
+                    }
                 }
+                else -> { /* Ignorar estado Loading */ }
             }
         }
     }
 
     fun deleteFriend(friendId: String) {
         viewModelScope.launch {
-            try {
-                // Aquí iría la llamada real al repositorio
-                // friendRepository.removeFriend(friendId)
-
-                // Actualización local para desarrollo
-                val updatedFriends = _uiState.value.friends.filter { it.id != friendId }
-                _uiState.update { it.copy(friends = updatedFriends) }
-            } catch (e: Exception) {
-                _uiState.update {
-                    it.copy(error = "Error al eliminar el amigo: ${e.message}")
+            when (val result = friendRepository.removeFriend(friendId)) {
+                is Result.Success -> {
+                    // Actualizar la lista de amigos localmente
+                    val updatedFriends = _uiState.value.friends.filter { it.id != friendId }
+                    _uiState.update { it.copy(friends = updatedFriends) }
                 }
+                is Result.Error -> {
+                    _uiState.update {
+                        it.copy(error = "Error al eliminar el amigo: ${result.exception.message}")
+                    }
+                }
+                else -> { /* Ignorar estado Loading */ }
             }
         }
     }

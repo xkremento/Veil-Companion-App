@@ -2,8 +2,9 @@ package com.tfg.veilcompanionapp.ui.screens.friends
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tfg.veilcompanionapp.data.repository.FriendRepository
 import com.tfg.veilcompanionapp.domain.model.FriendRequest
-import com.tfg.veilcompanionapp.utils.DummyDataProvider
+import com.tfg.veilcompanionapp.domain.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,7 +21,7 @@ data class FriendRequestsUiState(
 
 @HiltViewModel
 class FriendRequestsViewModel @Inject constructor(
-    // private val friendRepository: FriendRepository
+    private val friendRepository: FriendRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(FriendRequestsUiState())
@@ -33,60 +34,61 @@ class FriendRequestsViewModel @Inject constructor(
     private fun loadFriendRequests() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            try {
-                // Aquí iría la llamada real al repositorio
-                // val requestsList = friendRepository.getFriendRequests()
 
-                // Simulación para desarrollo
-                val requestsList = DummyDataProvider.getDummyFriendRequests()
-
-                _uiState.update { currentState ->
-                    currentState.copy(
-                        isLoading = false,
-                        friendRequests = requestsList
-                    )
+            when (val result = friendRepository.getFriendRequests()) {
+                is Result.Success -> {
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            isLoading = false,
+                            friendRequests = result.data
+                        )
+                    }
                 }
-            } catch (e: Exception) {
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        error = "Error al cargar las solicitudes de amistad: ${e.message}"
-                    )
+                is Result.Error -> {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            error = "Error al cargar las solicitudes de amistad: ${result.exception.message}"
+                        )
+                    }
                 }
+                else -> { /* Ignorar estado Loading */ }
             }
         }
     }
 
     fun acceptFriendRequest(requestId: Long) {
         viewModelScope.launch {
-            try {
-                // Aquí iría la llamada real al repositorio
-                // friendRepository.acceptFriendRequest(requestId)
-
-                // Actualización local para desarrollo
-                val updatedRequests = _uiState.value.friendRequests.filter { it.id != requestId }
-                _uiState.update { it.copy(friendRequests = updatedRequests) }
-            } catch (e: Exception) {
-                _uiState.update {
-                    it.copy(error = "Error al aceptar la solicitud: ${e.message}")
+            when (val result = friendRepository.acceptFriendRequest(requestId)) {
+                is Result.Success -> {
+                    // Actualizar la lista de solicitudes localmente
+                    val updatedRequests = _uiState.value.friendRequests.filter { it.id != requestId }
+                    _uiState.update { it.copy(friendRequests = updatedRequests) }
                 }
+                is Result.Error -> {
+                    _uiState.update {
+                        it.copy(error = "Error al aceptar la solicitud: ${result.exception.message}")
+                    }
+                }
+                else -> { /* Ignorar estado Loading */ }
             }
         }
     }
 
     fun rejectFriendRequest(requestId: Long) {
         viewModelScope.launch {
-            try {
-                // Aquí iría la llamada real al repositorio
-                // friendRepository.rejectFriendRequest(requestId)
-
-                // Actualización local para desarrollo
-                val updatedRequests = _uiState.value.friendRequests.filter { it.id != requestId }
-                _uiState.update { it.copy(friendRequests = updatedRequests) }
-            } catch (e: Exception) {
-                _uiState.update {
-                    it.copy(error = "Error al rechazar la solicitud: ${e.message}")
+            when (val result = friendRepository.rejectFriendRequest(requestId)) {
+                is Result.Success -> {
+                    // Actualizar la lista de solicitudes localmente
+                    val updatedRequests = _uiState.value.friendRequests.filter { it.id != requestId }
+                    _uiState.update { it.copy(friendRequests = updatedRequests) }
                 }
+                is Result.Error -> {
+                    _uiState.update {
+                        it.copy(error = "Error al rechazar la solicitud: ${result.exception.message}")
+                    }
+                }
+                else -> { /* Ignorar estado Loading */ }
             }
         }
     }

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -78,11 +79,11 @@ dependencies {
     // Coil
     implementation(libs.coil.compose)
 
-    // Dagger Hilt
+    // Dagger Hilt - ACTUALIZADO
     implementation(libs.hilt.android)
-    annotationProcessor(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler) // Cambia a KSP
     implementation(libs.androidx.hilt.navigation.compose)
-    annotationProcessor(libs.androidx.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     // Retrofit + OkHttp
     implementation(libs.retrofit)

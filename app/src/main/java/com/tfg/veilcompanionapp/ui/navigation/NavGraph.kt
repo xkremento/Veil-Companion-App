@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.tfg.veilcompanionapp.ui.screens.AuthScreen
+import com.tfg.veilcompanionapp.ui.screens.auth.AuthScreen
 import com.tfg.veilcompanionapp.ui.screens.auth.LoginScreen
 import com.tfg.veilcompanionapp.ui.screens.auth.RegisterScreen
 import com.tfg.veilcompanionapp.ui.screens.friends.AddFriendScreen

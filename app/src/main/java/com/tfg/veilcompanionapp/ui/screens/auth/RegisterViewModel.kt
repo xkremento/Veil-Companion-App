@@ -2,6 +2,8 @@ package com.tfg.veilcompanionapp.ui.screens.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tfg.veilcompanionapp.data.repository.AuthRepository
+import com.tfg.veilcompanionapp.domain.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,7 +30,7 @@ data class RegisterUiState(
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    // private val authRepository: AuthRepository
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(RegisterUiState())
@@ -77,28 +79,27 @@ class RegisterViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
-            try {
-                // Aquí iría la llamada real al repositorio
-                // val result = authRepository.register(
-                //     email = _uiState.value.email,
-                //     nickname = _uiState.value.nickname,
-                //     password = _uiState.value.password,
-                //     profileImageUrl = _uiState.value.profileImageUrl.takeIf { it.isNotBlank() }
-                // )
+            val profileImageUrl = _uiState.value.profileImageUrl.takeIf { it.isNotBlank() }
 
-                // Simulación para desarrollo - esperamos 1.5 segundos para simular la llamada a la API
-                kotlinx.coroutines.delay(1500)
-
-                // Simulamos que el registro es exitoso solo con fines de desarrollo
-                _uiState.update { it.copy(
-                    isLoading = false,
-                    isRegistrationSuccessful = true
-                ) }
-            } catch (e: Exception) {
-                _uiState.update { it.copy(
-                    isLoading = false,
-                    errorMessage = "Error al registrar usuario: ${e.message}"
-                ) }
+            when (val result = authRepository.register(
+                email = _uiState.value.email,
+                nickname = _uiState.value.nickname,
+                password = _uiState.value.password,
+                profileImageUrl = profileImageUrl
+            )) {
+                is Result.Success -> {
+                    _uiState.update { it.copy(
+                        isLoading = false,
+                        isRegistrationSuccessful = true
+                    ) }
+                }
+                is Result.Error -> {
+                    _uiState.update { it.copy(
+                        isLoading = false,
+                        errorMessage = result.exception.message ?: "Error desconocido al registrar"
+                    ) }
+                }
+                else -> { /* Ignorar estado Loading */ }
             }
         }
     }
