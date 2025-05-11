@@ -36,4 +36,5 @@
     <string name="confirm_password_string">Confirmar contraseña</string>
     <string name="profile_image_url_string">URL de imagen de perfil (opcional)</string>
     <string name="optional_fields_info">Los campos marcados como (opcional) no son obligatorios para el registro</string>
+    <string name="logout_string">Cerrar sesión</string>
 </resources>

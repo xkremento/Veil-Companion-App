@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tfg.veilcompanionapp.data.repository.GameRepository
 import com.tfg.veilcompanionapp.data.repository.PlayerRepository
+import com.tfg.veilcompanionapp.data.repository.AuthRepository
 import com.tfg.veilcompanionapp.domain.model.Game
 import com.tfg.veilcompanionapp.domain.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +29,8 @@ data class HomeUiState(
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val playerRepository: PlayerRepository,
-    private val gameRepository: GameRepository
+    private val gameRepository: GameRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
@@ -95,5 +97,17 @@ class HomeViewModel @Inject constructor(
     fun refreshData() {
         loadUserData()
         loadGames()
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            try {
+                authRepository.logout()
+            } catch (e: Exception) {
+                _uiState.update { it.copy(
+                    error = "Error al cerrar sesión: ${e.message}"
+                ) }
+            }
+        }
     }
 }

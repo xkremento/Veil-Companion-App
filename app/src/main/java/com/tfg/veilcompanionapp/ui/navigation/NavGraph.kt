@@ -12,7 +12,9 @@ import com.tfg.veilcompanionapp.ui.screens.friends.AddFriendScreen
 import com.tfg.veilcompanionapp.ui.screens.friends.FriendRequestsScreen
 import com.tfg.veilcompanionapp.ui.screens.friends.FriendsScreen
 import com.tfg.veilcompanionapp.ui.screens.home.HomeScreen
+import com.tfg.veilcompanionapp.ui.screens.home.HomeViewModel
 import com.tfg.veilcompanionapp.ui.screens.splash.SplashScreen
+import androidx.hilt.navigation.compose.hiltViewModel
 
 object Route {
     const val SPLASH = "splash"
@@ -94,9 +96,16 @@ fun NavGraph(
 
         // Home Screen - Pantalla principal de la aplicación
         composable(Route.HOME) {
+            val homeViewModel: HomeViewModel = hiltViewModel()
             HomeScreen(
                 onFriendsClick = {
                     navController.navigate(Route.FRIENDS)
+                },
+                onLogoutClick = {
+                    homeViewModel.logout()
+                    navController.navigate(Route.AUTH) {
+                        popUpTo(Route.HOME) { inclusive = true }
+                    }
                 }
             )
         }

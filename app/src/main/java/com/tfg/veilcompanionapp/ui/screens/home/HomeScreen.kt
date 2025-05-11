@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -33,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,6 +50,7 @@ import com.tfg.veilcompanionapp.ui.theme.fontFamilyVeil
 @Composable
 fun HomeScreen(
     onFriendsClick: () -> Unit = {},
+    onLogoutClick: () -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -55,6 +58,7 @@ fun HomeScreen(
     HomeContent(
         uiState = uiState,
         onFriendsClick = onFriendsClick,
+        onLogoutClick = onLogoutClick,
         onRefresh = { viewModel.refreshData() }
     )
 }
@@ -63,6 +67,7 @@ fun HomeScreen(
 fun HomeContent(
     uiState: HomeUiState,
     onFriendsClick: () -> Unit,
+    onLogoutClick: () -> Unit,
     onRefresh: () -> Unit
 ) {
     Box(
@@ -90,13 +95,24 @@ fun HomeContent(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        // Logout Icon Button (NUEVO)
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                            contentDescription = stringResource(R.string.logout_string),
+                            tint = VeilTitleColor,
+                            modifier = Modifier
+                                .size(32.dp)
+                                .clickable { onLogoutClick() }
+                        )
+
                         // Username
                         Text(
                             text = uiState.username,
                             fontFamily = fontFamilyVeil,
                             fontSize = 24.sp,
                             color = Color.White,
-                            modifier = Modifier.padding(end = 16.dp)
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.weight(1f)
                         )
 
                         // Friends Icon Button
@@ -231,7 +247,7 @@ fun HomeContent(
                             fontFamily = fontFamilyVeil,
                             fontSize = 16.sp,
                             color = Color.LightGray,
-                            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                            textAlign = TextAlign.Center,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(32.dp)
@@ -286,7 +302,8 @@ fun HomeScreenPreview() {
                 games = sampleGames
             ),
             onFriendsClick = {},
-            onRefresh = {}
+            onRefresh = {},
+            onLogoutClick = TODO()
         )
     }
 }
@@ -304,7 +321,8 @@ fun HomeScreenEmptyGamesPreview() {
                 games = emptyList()
             ),
             onFriendsClick = {},
-            onRefresh = {}
+            onRefresh = {},
+            onLogoutClick = TODO()
         )
     }
 }
@@ -318,7 +336,8 @@ fun HomeScreenLoadingPreview() {
                 isLoading = true
             ),
             onFriendsClick = {},
-            onRefresh = {}
+            onRefresh = {},
+            onLogoutClick = TODO()
         )
     }
 }
@@ -337,7 +356,8 @@ fun HomeScreenErrorPreview() {
                 error = "Error al cargar los datos"
             ),
             onFriendsClick = {},
-            onRefresh = {}
+            onRefresh = {},
+            onLogoutClick = TODO()
         )
     }
 }
