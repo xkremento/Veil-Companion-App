@@ -53,14 +53,15 @@ class HomeViewModel @Inject constructor(
                             isLoading = false,
                             username = player.nickname,
                             profileImageUrl = player.profileImageUrl,
-                            // Suponiendo que los "points" son 0 en este sistema
+                            // Assuming that "points" are 0 in this system
                             points = 0,
-                            // Suponiendo que el número de amigos no está disponible directamente
+                            // Assuming that the number of friends is not directly available
                             friends = 0,
                             coins = player.coins
                         )
                     }
                 }
+
                 is Result.Error -> {
                     _uiState.update {
                         it.copy(
@@ -69,7 +70,9 @@ class HomeViewModel @Inject constructor(
                         )
                     }
                 }
-                else -> { /* Ignorar estado Loading */ }
+
+                else -> { /* Ignore loading state */
+                }
             }
         }
     }
@@ -82,6 +85,7 @@ class HomeViewModel @Inject constructor(
                         currentState.copy(games = result.data)
                     }
                 }
+
                 is Result.Error -> {
                     _uiState.update {
                         it.copy(
@@ -89,7 +93,9 @@ class HomeViewModel @Inject constructor(
                         )
                     }
                 }
-                else -> { /* Ignorar estado Loading */ }
+
+                else -> { /* Ignore loading state */
+                }
             }
         }
     }
@@ -104,9 +110,11 @@ class HomeViewModel @Inject constructor(
             try {
                 authRepository.logout()
             } catch (e: Exception) {
-                _uiState.update { it.copy(
-                    error = "Error al cerrar sesión: ${e.message}"
-                ) }
+                _uiState.update {
+                    it.copy(
+                        error = "Error al cerrar sesión: ${e.message}"
+                    )
+                }
             }
         }
     }

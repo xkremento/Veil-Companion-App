@@ -19,8 +19,7 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideAuthRepository(
-        apiService: ApiService,
-        userPreferences: UserPreferences
+        apiService: ApiService, userPreferences: UserPreferences
     ): AuthRepository {
         return AuthRepository(apiService, userPreferences)
     }

@@ -5,12 +5,12 @@ import com.tfg.veilcompanionapp.domain.model.FriendRequest
 import com.tfg.veilcompanionapp.domain.model.Game
 
 /**
- * Clase para proporcionar datos de ejemplo durante el desarrollo
- * Reemplazar con datos reales de la API cuando esté disponible
+ * Class to provide sample data during development
+ * Replace with real API data when available
  */
 object DummyDataProvider {
 
-    // Datos del usuario
+    // User data
     data class DummyUser(
         val username: String,
         val profileImageUrl: String?,
@@ -27,7 +27,7 @@ object DummyDataProvider {
         coins = 200
     )
 
-    // Historial de partidas
+    // Game history
     fun getDummyGames() = listOf(
         Game(
             id = 1L,
@@ -47,7 +47,7 @@ object DummyDataProvider {
         )
     )
 
-    // Lista de amigos
+    // Friends list
     fun getDummyFriends() = listOf(
         Friend(
             id = "1",
@@ -76,7 +76,7 @@ object DummyDataProvider {
         )
     )
 
-    // Solicitudes de amistad
+    // Friend requests
     fun getDummyFriendRequests() = listOf(
         FriendRequest(
             id = 1,

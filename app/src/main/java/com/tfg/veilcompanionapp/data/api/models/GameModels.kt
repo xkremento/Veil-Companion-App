@@ -1,15 +1,11 @@
 package com.tfg.veilcompanionapp.data.api.models
 
 data class GameCreationDTO(
-    val duration: Int,
-    val playerEmails: List<String>,
-    val murdererEmail: String
+    val duration: Int, val playerEmails: List<String>, val murdererEmail: String
 )
 
 data class GameResponseDTO(
-    val id: Long,
-    val duration: Int,
-    val players: List<PlayerGameDTO>
+    val id: Long, val duration: Int, val players: List<PlayerGameDTO>
 )
 
 data class PlayerGameDTO(

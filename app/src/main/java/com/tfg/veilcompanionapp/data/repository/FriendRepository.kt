@@ -15,11 +15,8 @@ class FriendRepository @Inject constructor(
 
     suspend fun sendFriendRequest(friendEmail: String): Result<Long> {
         return try {
-            // La API espera el email del solicitante, pero el interceptor ya incluye el token
-            // Por lo que podemos usar una cadena vacía o cualquier placeholder, ya que el backend lo ignorará
             val requestDto = CreateFriendRequestDTO(
-                requesterId = "",
-                playerId = friendEmail
+                requesterId = "", playerId = friendEmail
             )
 
             val response = apiService.sendFriendRequest(requestDto)
@@ -44,8 +41,8 @@ class FriendRepository @Inject constructor(
                     FriendRequest(
                         id = dto.friendRequestId,
                         requesterId = dto.requesterId,
-                        requesterUsername = "", // API no proporciona el nombre de usuario en la solicitud
-                        requesterProfileImageUrl = null // API no proporciona la imagen en la solicitud
+                        requesterUsername = "",
+                        requesterProfileImageUrl = null
                     )
                 }
 

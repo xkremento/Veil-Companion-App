@@ -33,9 +33,7 @@ import com.tfg.veilcompanionapp.ui.theme.fontFamilyVeil
 
 @Composable
 fun FriendCard(
-    friend: Friend,
-    onDeleteClick: (String) -> Unit,
-    modifier: Modifier = Modifier
+    friend: Friend, onDeleteClick: (String) -> Unit, modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -80,8 +78,7 @@ fun FriendCard(
 
             // Delete Button
             IconButton(
-                onClick = { onDeleteClick(friend.id) }
-            ) {
+                onClick = { onDeleteClick(friend.id) }) {
                 Icon(
                     imageVector = Icons.Default.Delete,
                     contentDescription = stringResource(R.string.delete_friend_string),
@@ -98,12 +95,8 @@ fun FriendCardPreview() {
     MaterialTheme {
         FriendCard(
             friend = Friend(
-                id = "1",
-                username = "username",
-                profileImageUrl = null
-            ),
-            onDeleteClick = {},
-            modifier = Modifier.padding(16.dp)
+                id = "1", username = "username", profileImageUrl = null
+            ), onDeleteClick = {}, modifier = Modifier.padding(16.dp)
         )
     }
 }

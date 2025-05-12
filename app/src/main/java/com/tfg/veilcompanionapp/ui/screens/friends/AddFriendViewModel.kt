@@ -29,10 +29,11 @@ class AddFriendViewModel @Inject constructor(
     val uiState: StateFlow<AddFriendUiState> = _uiState.asStateFlow()
 
     fun updateEmail(email: String) {
-        _uiState.update { it.copy(
-            email = email,
-            emailError = null
-        ) }
+        _uiState.update {
+            it.copy(
+                email = email, emailError = null
+            )
+        }
     }
 
     fun sendFriendRequest() {
@@ -45,18 +46,24 @@ class AddFriendViewModel @Inject constructor(
 
             when (val result = friendRepository.sendFriendRequest(_uiState.value.email)) {
                 is Result.Success -> {
-                    _uiState.update { it.copy(
-                        isLoading = false,
-                        isRequestSent = true
-                    ) }
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false, isRequestSent = true
+                        )
+                    }
                 }
+
                 is Result.Error -> {
-                    _uiState.update { it.copy(
-                        isLoading = false,
-                        errorMessage = "Error al enviar la solicitud: ${result.exception.message}"
-                    ) }
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            errorMessage = "Error al enviar la solicitud: ${result.exception.message}"
+                        )
+                    }
                 }
-                else -> { /* Ignorar estado Loading */ }
+
+                else -> { /* Ignore loading state */
+                }
             }
         }
     }
@@ -69,9 +76,11 @@ class AddFriendViewModel @Inject constructor(
             else -> null
         }
 
-        _uiState.update { it.copy(
-            emailError = emailError
-        ) }
+        _uiState.update {
+            it.copy(
+                emailError = emailError
+            )
+        }
 
         return emailError == null
     }

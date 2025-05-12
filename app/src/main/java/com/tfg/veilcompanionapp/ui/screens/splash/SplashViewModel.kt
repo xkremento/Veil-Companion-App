@@ -23,7 +23,8 @@ class SplashViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    private val _navigationState = MutableStateFlow<SplashNavigationState>(SplashNavigationState.Loading)
+    private val _navigationState =
+        MutableStateFlow<SplashNavigationState>(SplashNavigationState.Loading)
     val navigationState: StateFlow<SplashNavigationState> = _navigationState.asStateFlow()
 
     init {
@@ -32,7 +33,7 @@ class SplashViewModel @Inject constructor(
 
     private fun checkAuthState() {
         viewModelScope.launch {
-            // Añadir un pequeño retraso para mostrar la animación
+            // Add small delay to show the animation
             delay(1500)
 
             try {
@@ -44,7 +45,7 @@ class SplashViewModel @Inject constructor(
                     _navigationState.update { SplashNavigationState.NavigateToAuth }
                 }
             } catch (e: Exception) {
-                // En caso de error, navegar a la pantalla de autenticación
+                // In case of error, navigate to the authentication screen
                 _navigationState.update { SplashNavigationState.NavigateToAuth }
             }
         }

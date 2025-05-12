@@ -85,8 +85,7 @@ fun FriendRequestCard(
 
             // Action Buttons
             IconButton(
-                onClick = { onAcceptClick(friendRequest.id) }
-            ) {
+                onClick = { onAcceptClick(friendRequest.id) }) {
                 Icon(
                     imageVector = Icons.Default.Check,
                     contentDescription = stringResource(R.string.accept_request_string),
@@ -97,8 +96,7 @@ fun FriendRequestCard(
             Spacer(modifier = Modifier.width(4.dp))
 
             IconButton(
-                onClick = { onRejectClick(friendRequest.id) }
-            ) {
+                onClick = { onRejectClick(friendRequest.id) }) {
                 Icon(
                     imageVector = Icons.Default.Close,
                     contentDescription = stringResource(R.string.reject_request_string),
@@ -115,14 +113,11 @@ fun FriendRequestCardPreview() {
     MaterialTheme {
         FriendRequestCard(
             friendRequest = FriendRequest(
-                id = 1,
-                requesterId = "user123",
-                requesterUsername = "username",
-                requesterProfileImageUrl = null
-            ),
-            onAcceptClick = {},
-            onRejectClick = {},
-            modifier = Modifier.padding(16.dp)
+            id = 1,
+            requesterId = "user123",
+            requesterUsername = "username",
+            requesterProfileImageUrl = null
+        ), onAcceptClick = {}, onRejectClick = {}, modifier = Modifier.padding(16.dp)
         )
     }
 }

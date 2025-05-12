@@ -53,11 +53,11 @@ fun RegisterScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    // Efecto para navegar después de un registro exitoso
+    // Effect to navigate after a successful registration
     LaunchedEffect(uiState.isRegistrationSuccessful) {
         if (uiState.isRegistrationSuccessful) {
             onRegistrationSuccess()
-            // Resetear el estado para futuros registros
+            // Reset state for future registrations
             viewModel.resetState()
         }
     }
@@ -149,8 +149,7 @@ fun RegisterContent(
 
             // Register Form
             Column(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -213,9 +212,7 @@ fun RegisterContent(
 
                 // Register button
                 AuthButton(
-                    isLogin = false,
-                    onClick = onRegisterClick,
-                    enabled = !isLoading
+                    isLogin = false, onClick = onRegisterClick, enabled = !isLoading
                 )
 
                 if (isLoading) {
@@ -258,8 +255,7 @@ fun RegisterScreenPreview() {
             profileImageUrl = "",
             onProfileImageUrlChange = {},
             onRegisterClick = {},
-            onBackClick = {}
-        )
+            onBackClick = {})
     }
 }
 
@@ -279,8 +275,7 @@ fun RegisterScreenWithDataPreview() {
             profileImageUrl = "https://example.com/image.jpg",
             onProfileImageUrlChange = {},
             onRegisterClick = {},
-            onBackClick = {}
-        )
+            onBackClick = {})
     }
 }
 

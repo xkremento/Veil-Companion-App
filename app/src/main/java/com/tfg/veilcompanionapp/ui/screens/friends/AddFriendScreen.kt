@@ -48,11 +48,11 @@ fun AddFriendScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    // Efecto para navegar después de enviar una solicitud exitosamente
+    // Effect to navigate after successfully sending a request
     LaunchedEffect(uiState.isRequestSent) {
         if (uiState.isRequestSent) {
             onFriendRequestSent()
-            // Resetear el estado para futuras solicitudes
+            // Reset state for future requests
             viewModel.resetState()
         }
     }
@@ -151,8 +151,7 @@ fun AddFriendContent(
                     onClick = onSendRequestClick,
                     enabled = !isLoading,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = VeilTitleColor,
-                        contentColor = Color.White
+                        containerColor = VeilTitleColor, contentColor = Color.White
                     ),
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -190,12 +189,7 @@ fun AddFriendContent(
 @Composable
 fun AddFriendScreenPreview() {
     MaterialTheme {
-        AddFriendContent(
-            email = "",
-            onEmailChange = {},
-            onSendRequestClick = {},
-            onBackClick = {}
-        )
+        AddFriendContent(email = "", onEmailChange = {}, onSendRequestClick = {}, onBackClick = {})
     }
 }
 
@@ -207,8 +201,7 @@ fun AddFriendScreenWithDataPreview() {
             email = "friend@example.com",
             onEmailChange = {},
             onSendRequestClick = {},
-            onBackClick = {}
-        )
+            onBackClick = {})
     }
 }
 

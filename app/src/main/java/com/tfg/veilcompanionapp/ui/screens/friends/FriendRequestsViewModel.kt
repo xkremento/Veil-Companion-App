@@ -39,11 +39,11 @@ class FriendRequestsViewModel @Inject constructor(
                 is Result.Success -> {
                     _uiState.update { currentState ->
                         currentState.copy(
-                            isLoading = false,
-                            friendRequests = result.data
+                            isLoading = false, friendRequests = result.data
                         )
                     }
                 }
+
                 is Result.Error -> {
                     _uiState.update {
                         it.copy(
@@ -52,7 +52,9 @@ class FriendRequestsViewModel @Inject constructor(
                         )
                     }
                 }
-                else -> { /* Ignorar estado Loading */ }
+
+                else -> { /* Ignore loading state */
+                }
             }
         }
     }
@@ -61,16 +63,20 @@ class FriendRequestsViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = friendRepository.acceptFriendRequest(requestId)) {
                 is Result.Success -> {
-                    // Actualizar la lista de solicitudes localmente
-                    val updatedRequests = _uiState.value.friendRequests.filter { it.id != requestId }
+                    // Update the requests list locally
+                    val updatedRequests =
+                        _uiState.value.friendRequests.filter { it.id != requestId }
                     _uiState.update { it.copy(friendRequests = updatedRequests) }
                 }
+
                 is Result.Error -> {
                     _uiState.update {
                         it.copy(error = "Error al aceptar la solicitud: ${result.exception.message}")
                     }
                 }
-                else -> { /* Ignorar estado Loading */ }
+
+                else -> { /* Ignore loading state */
+                }
             }
         }
     }
@@ -80,15 +86,19 @@ class FriendRequestsViewModel @Inject constructor(
             when (val result = friendRepository.rejectFriendRequest(requestId)) {
                 is Result.Success -> {
                     // Actualizar la lista de solicitudes localmente
-                    val updatedRequests = _uiState.value.friendRequests.filter { it.id != requestId }
+                    val updatedRequests =
+                        _uiState.value.friendRequests.filter { it.id != requestId }
                     _uiState.update { it.copy(friendRequests = updatedRequests) }
                 }
+
                 is Result.Error -> {
                     _uiState.update {
                         it.copy(error = "Error al rechazar la solicitud: ${result.exception.message}")
                     }
                 }
-                else -> { /* Ignorar estado Loading */ }
+
+                else -> { /* Ignore loading state */
+                }
             }
         }
     }

@@ -36,8 +36,7 @@ fun GameHistoryCard(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.White
@@ -50,14 +49,10 @@ fun GameHistoryCard(
         ) {
             // Date and Role Row
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = date,
-                    fontFamily = fontFamilyVeil,
-                    fontSize = 14.sp,
-                    color = Color.Black
+                    text = date, fontFamily = fontFamilyVeil, fontSize = 14.sp, color = Color.Black
                 )
 
                 Text(

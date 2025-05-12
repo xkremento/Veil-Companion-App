@@ -42,12 +42,13 @@ fun SplashScreen(
 ) {
     val navigationState by viewModel.navigationState.collectAsState()
 
-    // Efecto para manejar la navegación
+    // Effect to handle navigation
     LaunchedEffect(navigationState) {
         when (navigationState) {
             is SplashNavigationState.NavigateToAuth -> onNavigateToAuth()
             is SplashNavigationState.NavigateToHome -> onNavigateToHome()
-            else -> { /* Estado de carga, no hacemos nada */ }
+            else -> { /* Loading state, do nothing */
+            }
         }
     }
 
@@ -56,7 +57,7 @@ fun SplashScreen(
 
 @Composable
 fun SplashContent() {
-    // Estado para controlar la animación
+    // State to control the animation
     var startAnimation by remember { mutableStateOf(false) }
     val alphaAnim = animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f,
@@ -64,7 +65,7 @@ fun SplashContent() {
         label = "Alpha Animation"
     )
 
-    // Iniciar la animación después de la composición
+    // Start the animation after composition
     LaunchedEffect(true) {
         startAnimation = true
     }
@@ -77,18 +78,9 @@ fun SplashContent() {
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .alpha(alphaAnim.value)
+            modifier = Modifier.alpha(alphaAnim.value)
         ) {
-            // Aquí podrías añadir una imagen de logo si la tienes
-            // Image(
-            //     painter = painterResource(id = R.drawable.veil_logo),
-            //     contentDescription = "Veil Logo",
-            //     modifier = Modifier.size(150.dp),
-            //     contentScale = ContentScale.Fit
-            // )
-
-            // Título "Veil"
+            //"Veil" title
             Text(
                 text = stringResource(R.string.title),
                 fontSize = 130.sp,
@@ -98,13 +90,12 @@ fun SplashContent() {
             )
 
             HorizontalDivider(
-                modifier = Modifier
-                    .padding(horizontal = 40.dp),
+                modifier = Modifier.padding(horizontal = 40.dp),
                 thickness = 2.dp,
                 color = Color.Gray
             )
 
-            // Subtítulo "Tricked"
+            // "Tricked" subtitle
             Text(
                 text = stringResource(R.string.subtitle),
                 fontSize = 45.sp,
@@ -114,7 +105,7 @@ fun SplashContent() {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Denominación
+            // Denomination
             Text(
                 text = stringResource(R.string.denomination),
                 fontSize = 15.sp,
@@ -124,7 +115,7 @@ fun SplashContent() {
             )
         }
 
-        // Credits en la parte inferior
+        // Credits at the bottom
         Text(
             text = stringResource(R.string.credits),
             fontSize = 12.sp,

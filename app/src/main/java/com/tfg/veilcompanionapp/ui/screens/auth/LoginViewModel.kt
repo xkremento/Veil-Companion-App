@@ -31,17 +31,19 @@ class LoginViewModel @Inject constructor(
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
     fun updateEmail(email: String) {
-        _uiState.update { it.copy(
-            email = email,
-            emailError = null
-        ) }
+        _uiState.update {
+            it.copy(
+                email = email, emailError = null
+            )
+        }
     }
 
     fun updatePassword(password: String) {
-        _uiState.update { it.copy(
-            password = password,
-            passwordError = null
-        ) }
+        _uiState.update {
+            it.copy(
+                password = password, passwordError = null
+            )
+        }
     }
 
     fun login() {
@@ -52,20 +54,28 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
-            when (val result = authRepository.login(_uiState.value.email, _uiState.value.password)) {
+            when (val result =
+                authRepository.login(_uiState.value.email, _uiState.value.password)) {
                 is Result.Success -> {
-                    _uiState.update { it.copy(
-                        isLoading = false,
-                        isLoginSuccessful = true
-                    ) }
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false, isLoginSuccessful = true
+                        )
+                    }
                 }
+
                 is Result.Error -> {
-                    _uiState.update { it.copy(
-                        isLoading = false,
-                        errorMessage = result.exception.message ?: "Error desconocido al iniciar sesión"
-                    ) }
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            errorMessage = result.exception.message
+                                ?: "Error desconocido al iniciar sesión"
+                        )
+                    }
                 }
-                else -> { /* Ignorar estado Loading */ }
+
+                else -> { /* Ignore loading state */
+                }
             }
         }
     }
@@ -84,10 +94,11 @@ class LoginViewModel @Inject constructor(
             else -> null
         }
 
-        _uiState.update { it.copy(
-            emailError = emailError,
-            passwordError = passwordError
-        ) }
+        _uiState.update {
+            it.copy(
+                emailError = emailError, passwordError = passwordError
+            )
+        }
 
         return emailError == null && passwordError == null
     }

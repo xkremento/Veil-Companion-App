@@ -26,19 +26,19 @@ class UserPreferences @Inject constructor(
         private val USER_NICKNAME = stringPreferencesKey("user_nickname")
     }
 
-    // Guardar el token JWT
+    // Save JWT token
     suspend fun saveAuthToken(token: String) {
         dataStore.edit { preferences ->
             preferences[JWT_TOKEN] = token
         }
     }
 
-    // Obtener el token JWT
+    // Get JWT token
     val authToken: Flow<String?> = dataStore.data.map { preferences ->
         preferences[JWT_TOKEN]
     }
 
-    // Guardar información del usuario
+    // Save user information
     suspend fun saveUserInfo(email: String, nickname: String) {
         dataStore.edit { preferences ->
             preferences[USER_EMAIL] = email
@@ -46,7 +46,7 @@ class UserPreferences @Inject constructor(
         }
     }
 
-    // Obtener información del usuario
+    // Get user information
     val userEmail: Flow<String?> = dataStore.data.map { preferences ->
         preferences[USER_EMAIL]
     }
@@ -55,7 +55,7 @@ class UserPreferences @Inject constructor(
         preferences[USER_NICKNAME]
     }
 
-    // Limpiar todos los datos (logout)
+    // Clear all data (logout)
     suspend fun clearData() {
         dataStore.edit { preferences ->
             preferences.clear()

@@ -39,11 +39,11 @@ class FriendsViewModel @Inject constructor(
                 is Result.Success -> {
                     _uiState.update { currentState ->
                         currentState.copy(
-                            isLoading = false,
-                            friends = result.data
+                            isLoading = false, friends = result.data
                         )
                     }
                 }
+
                 is Result.Error -> {
                     _uiState.update {
                         it.copy(
@@ -52,7 +52,9 @@ class FriendsViewModel @Inject constructor(
                         )
                     }
                 }
-                else -> { /* Ignorar estado Loading */ }
+
+                else -> { /* Ignore loading state */
+                }
             }
         }
     }
@@ -61,16 +63,19 @@ class FriendsViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = friendRepository.removeFriend(friendId)) {
                 is Result.Success -> {
-                    // Actualizar la lista de amigos localmente
+                    // Update the friends list locally
                     val updatedFriends = _uiState.value.friends.filter { it.id != friendId }
                     _uiState.update { it.copy(friends = updatedFriends) }
                 }
+
                 is Result.Error -> {
                     _uiState.update {
                         it.copy(error = "Error al eliminar el amigo: ${result.exception.message}")
                     }
                 }
-                else -> { /* Ignorar estado Loading */ }
+
+                else -> { /* Ignore loading state */
+                }
             }
         }
     }

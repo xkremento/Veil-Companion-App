@@ -19,17 +19,17 @@ class GameRepository @Inject constructor(
 
             if (response.isSuccessful && response.body() != null) {
                 val games = response.body()!!.map { dto ->
-                    // Buscamos si somos asesinos en esta partida
+                    // Check if we are the murderer in this game
                     val playerData = dto.players.find { it.isMurderer }
                     val isMurderer = playerData != null
 
-                    // Formateamos la fecha/hora
+                    // Format date/time
                     val gameDateTime = playerData?.gameDateTime ?: ""
 
-                    // Determinamos el ganador (esto dependerá de la lógica de tu juego)
-                    val winner = "" // Información no disponible directamente en la API
+                    // Determine the winner
+                    val winner = ""
 
-                    // Formato de duración (minutos:segundos)
+                    // Duration format (minutes:seconds)
                     val minutes = dto.duration / 60
                     val seconds = dto.duration % 60
                     val duration = String.format("%02d:%02d", minutes, seconds)
@@ -40,7 +40,7 @@ class GameRepository @Inject constructor(
                         role = if (isMurderer) "Asesino" else "Inocente",
                         duration = duration,
                         winner = winner,
-                        reward = "+10 pesos" // Información no disponible directamente en la API
+                        reward = "+10 pesos"
                     )
                 }
 
@@ -55,14 +55,13 @@ class GameRepository @Inject constructor(
 
     private fun formatDateTime(dateTimeString: String): String {
         return try {
-            // Suponiendo que la API devuelve una fecha en formato ISO 8601
             val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
             val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
             val date = inputFormat.parse(dateTimeString)
             outputFormat.format(date!!)
         } catch (e: Exception) {
-            dateTimeString // Devolver el original si hay error
+            dateTimeString // Fallback to original string if parsing fails
         }
     }
 }

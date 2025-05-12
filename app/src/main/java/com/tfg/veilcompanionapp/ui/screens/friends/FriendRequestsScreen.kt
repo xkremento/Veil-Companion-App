@@ -41,8 +41,7 @@ import com.tfg.veilcompanionapp.ui.theme.fontFamilyVeil
 
 @Composable
 fun FriendRequestsScreen(
-    onBackClick: () -> Unit = {},
-    viewModel: FriendRequestsViewModel = hiltViewModel()
+    onBackClick: () -> Unit = {}, viewModel: FriendRequestsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -51,8 +50,7 @@ fun FriendRequestsScreen(
         onBackClick = onBackClick,
         onAcceptRequest = { requestId -> viewModel.acceptFriendRequest(requestId) },
         onRejectRequest = { requestId -> viewModel.rejectFriendRequest(requestId) },
-        onRefresh = { viewModel.refreshFriendRequests() }
-    )
+        onRefresh = { viewModel.refreshFriendRequests() })
 }
 
 @Composable
@@ -105,8 +103,7 @@ fun FriendRequestsContent(
             if (uiState.isLoading) {
                 // Loading Indicator
                 Box(
-                    modifier = Modifier.weight(1f),
-                    contentAlignment = Alignment.Center
+                    modifier = Modifier.weight(1f), contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator(
                         color = VeilTitleColor
@@ -171,14 +168,12 @@ fun FriendRequestsScreenPreview() {
             requesterId = "user1",
             requesterUsername = "username1",
             requesterProfileImageUrl = null
-        ),
-        FriendRequest(
+        ), FriendRequest(
             id = 2,
             requesterId = "user2",
             requesterUsername = "username2",
             requesterProfileImageUrl = null
-        ),
-        FriendRequest(
+        ), FriendRequest(
             id = 3,
             requesterId = "user3",
             requesterUsername = "username3",
@@ -189,13 +184,8 @@ fun FriendRequestsScreenPreview() {
     MaterialTheme {
         FriendRequestsContent(
             uiState = FriendRequestsUiState(
-                friendRequests = sampleRequests
-            ),
-            onBackClick = {},
-            onAcceptRequest = {},
-            onRejectRequest = {},
-            onRefresh = {}
-        )
+            friendRequests = sampleRequests
+        ), onBackClick = {}, onAcceptRequest = {}, onRejectRequest = {}, onRefresh = {})
     }
 }
 
@@ -205,13 +195,8 @@ fun FriendRequestsScreenEmptyPreview() {
     MaterialTheme {
         FriendRequestsContent(
             uiState = FriendRequestsUiState(
-                friendRequests = emptyList()
-            ),
-            onBackClick = {},
-            onAcceptRequest = {},
-            onRejectRequest = {},
-            onRefresh = {}
-        )
+            friendRequests = emptyList()
+        ), onBackClick = {}, onAcceptRequest = {}, onRejectRequest = {}, onRefresh = {})
     }
 }
 
@@ -221,12 +206,7 @@ fun FriendRequestsScreenLoadingPreview() {
     MaterialTheme {
         FriendRequestsContent(
             uiState = FriendRequestsUiState(
-                isLoading = true
-            ),
-            onBackClick = {},
-            onAcceptRequest = {},
-            onRejectRequest = {},
-            onRefresh = {}
-        )
+            isLoading = true
+        ), onBackClick = {}, onAcceptRequest = {}, onRejectRequest = {}, onRefresh = {})
     }
 }

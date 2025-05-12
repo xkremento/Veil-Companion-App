@@ -28,8 +28,7 @@ import com.tfg.veilcompanionapp.ui.theme.VeilTitleColor
 
 @Composable
 fun AuthScreen(
-    onLoginClick: () -> Unit = {},
-    onRegisterClick: () -> Unit = {}
+    onLoginClick: () -> Unit = {}, onRegisterClick: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -50,10 +49,7 @@ fun AuthScreen(
                 letterSpacing = 2.sp
             )
             HorizontalDivider(
-                modifier = Modifier
-                    .width(280.dp),
-                thickness = 2.dp,
-                color = Color.Gray
+                modifier = Modifier.width(280.dp), thickness = 2.dp, color = Color.Gray
             )
             Text(
                 text = stringResource(R.string.subtitle),
@@ -72,15 +68,13 @@ fun AuthScreen(
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             AuthButton(
-                isLogin = true,
-                onClick = onLoginClick  // Ahora usa el callback para Login
+                isLogin = true, onClick = onLoginClick
             )
 
             Spacer(modifier = Modifier.height(40.dp))
 
             AuthButton(
-                isLogin = false,
-                onClick = onRegisterClick  // Ahora usa el callback para Register
+                isLogin = false, onClick = onRegisterClick
             )
         }
 

@@ -12,8 +12,7 @@ import com.tfg.veilcompanionapp.domain.model.Result
 
 @Singleton
 class AuthRepository @Inject constructor(
-    private val apiService: ApiService,
-    private val userPreferences: UserPreferences
+    private val apiService: ApiService, private val userPreferences: UserPreferences
 ) {
 
     suspend fun login(email: String, password: String): Result<AuthResponse> {
@@ -23,7 +22,7 @@ class AuthRepository @Inject constructor(
             if (response.isSuccessful && response.body() != null) {
                 val authResponse = response.body()!!
 
-                // Guardar el token JWT y la información del usuario
+                // Save JWT token and user information
                 userPreferences.saveAuthToken(authResponse.token)
                 userPreferences.saveUserInfo(authResponse.email, authResponse.nickname)
 
@@ -37,10 +36,7 @@ class AuthRepository @Inject constructor(
     }
 
     suspend fun register(
-        email: String,
-        nickname: String,
-        password: String,
-        profileImageUrl: String? = null
+        email: String, nickname: String, password: String, profileImageUrl: String? = null
     ): Result<Unit> {
         return try {
             val playerDto = PlayerRegistrationDTO(

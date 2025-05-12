@@ -37,38 +37,43 @@ class RegisterViewModel @Inject constructor(
     val uiState: StateFlow<RegisterUiState> = _uiState.asStateFlow()
 
     fun updateEmail(email: String) {
-        _uiState.update { it.copy(
-            email = email,
-            emailError = null
-        ) }
+        _uiState.update {
+            it.copy(
+                email = email, emailError = null
+            )
+        }
     }
 
     fun updateNickname(nickname: String) {
-        _uiState.update { it.copy(
-            nickname = nickname,
-            nicknameError = null
-        ) }
+        _uiState.update {
+            it.copy(
+                nickname = nickname, nicknameError = null
+            )
+        }
     }
 
     fun updatePassword(password: String) {
-        _uiState.update { it.copy(
-            password = password,
-            passwordError = null
-        ) }
+        _uiState.update {
+            it.copy(
+                password = password, passwordError = null
+            )
+        }
     }
 
     fun updateConfirmPassword(confirmPassword: String) {
-        _uiState.update { it.copy(
-            confirmPassword = confirmPassword,
-            confirmPasswordError = null
-        ) }
+        _uiState.update {
+            it.copy(
+                confirmPassword = confirmPassword, confirmPasswordError = null
+            )
+        }
     }
 
     fun updateProfileImageUrl(profileImageUrl: String) {
-        _uiState.update { it.copy(
-            profileImageUrl = profileImageUrl,
-            profileImageUrlError = null
-        ) }
+        _uiState.update {
+            it.copy(
+                profileImageUrl = profileImageUrl, profileImageUrlError = null
+            )
+        }
     }
 
     fun register() {
@@ -88,18 +93,25 @@ class RegisterViewModel @Inject constructor(
                 profileImageUrl = profileImageUrl
             )) {
                 is Result.Success -> {
-                    _uiState.update { it.copy(
-                        isLoading = false,
-                        isRegistrationSuccessful = true
-                    ) }
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false, isRegistrationSuccessful = true
+                        )
+                    }
                 }
+
                 is Result.Error -> {
-                    _uiState.update { it.copy(
-                        isLoading = false,
-                        errorMessage = result.exception.message ?: "Error desconocido al registrar"
-                    ) }
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            errorMessage = result.exception.message
+                                ?: "Error desconocido al registrar"
+                        )
+                    }
                 }
-                else -> { /* Ignorar estado Loading */ }
+
+                else -> { /* Ignore loading state */
+                }
             }
         }
     }
@@ -120,8 +132,7 @@ class RegisterViewModel @Inject constructor(
             _uiState.value.nickname.isBlank() -> "El nickname no puede estar vacío"
             _uiState.value.nickname.length < 3 -> "El nickname debe tener al menos 3 caracteres"
             _uiState.value.nickname.length > 30 -> "El nickname no puede tener más de 30 caracteres"
-            !_uiState.value.nickname.matches(nicknamePattern.toRegex()) ->
-                "El nickname solo puede contener letras, números y guiones bajos"
+            !_uiState.value.nickname.matches(nicknamePattern.toRegex()) -> "El nickname solo puede contener letras, números y guiones bajos"
             else -> null
         }
 
@@ -129,8 +140,7 @@ class RegisterViewModel @Inject constructor(
             _uiState.value.password.isBlank() -> "La contraseña no puede estar vacía"
             _uiState.value.password.length < 8 -> "La contraseña debe tener al menos 8 caracteres"
             _uiState.value.password.length > 128 -> "La contraseña no puede tener más de 128 caracteres"
-            !_uiState.value.password.matches(passwordPattern.toRegex()) ->
-                "La contraseña debe contener al menos un número, una letra minúscula, una letra mayúscula y un carácter especial"
+            !_uiState.value.password.matches(passwordPattern.toRegex()) -> "La contraseña debe contener al menos un número, una letra minúscula, una letra mayúscula y un carácter especial"
             else -> null
         }
 
@@ -141,25 +151,24 @@ class RegisterViewModel @Inject constructor(
         }
 
         val profileImageUrlError = when {
-            _uiState.value.profileImageUrl.isNotBlank() &&
-                    !_uiState.value.profileImageUrl.matches(urlPattern.toRegex()) ->
-                "Introduce una URL válida para la imagen de perfil"
+            _uiState.value.profileImageUrl.isNotBlank() && !_uiState.value.profileImageUrl.matches(
+                urlPattern.toRegex()
+            ) -> "Introduce una URL válida para la imagen de perfil"
+
             else -> null
         }
 
-        _uiState.update { it.copy(
-            emailError = emailError,
-            nicknameError = nicknameError,
-            passwordError = passwordError,
-            confirmPasswordError = confirmPasswordError,
-            profileImageUrlError = profileImageUrlError
-        ) }
+        _uiState.update {
+            it.copy(
+                emailError = emailError,
+                nicknameError = nicknameError,
+                passwordError = passwordError,
+                confirmPasswordError = confirmPasswordError,
+                profileImageUrlError = profileImageUrlError
+            )
+        }
 
-        return emailError == null &&
-                nicknameError == null &&
-                passwordError == null &&
-                confirmPasswordError == null &&
-                profileImageUrlError == null
+        return emailError == null && nicknameError == null && passwordError == null && confirmPasswordError == null && profileImageUrlError == null
     }
 
     fun resetState() {

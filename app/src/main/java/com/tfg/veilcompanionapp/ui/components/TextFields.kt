@@ -52,28 +52,21 @@ fun EmailTextField(
         label = { Text(text = label, fontFamily = fontFamilyVeil) },
         leadingIcon = {
             Icon(
-                imageVector = Icons.Default.Email,
-                contentDescription = null,
-                tint = Color.White
+                imageVector = Icons.Default.Email, contentDescription = null, tint = Color.White
             )
         },
         isError = isError,
         supportingText = {
             if (isError && errorMessage != null) {
                 Text(
-                    text = errorMessage,
-                    color = MaterialTheme.colorScheme.error
+                    text = errorMessage, color = MaterialTheme.colorScheme.error
                 )
             }
         },
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Email,
-            imeAction = imeAction
+            keyboardType = KeyboardType.Email, imeAction = imeAction
         ),
-        keyboardActions = KeyboardActions(
-            onDone = { onImeAction() },
-            onNext = { onImeAction() }
-        ),
+        keyboardActions = KeyboardActions(onDone = { onImeAction() }, onNext = { onImeAction() }),
         singleLine = true,
         shape = RoundedCornerShape(8.dp),
         colors = OutlinedTextFieldDefaults.colors(
@@ -108,9 +101,7 @@ fun PasswordTextField(
         label = { Text(text = label, fontFamily = fontFamilyVeil) },
         leadingIcon = {
             Icon(
-                imageVector = Icons.Default.Lock,
-                contentDescription = null,
-                tint = Color.White
+                imageVector = Icons.Default.Lock, contentDescription = null, tint = Color.White
             )
         },
         trailingIcon = {
@@ -131,18 +122,15 @@ fun PasswordTextField(
         supportingText = {
             if (isError && errorMessage != null) {
                 Text(
-                    text = errorMessage,
-                    color = MaterialTheme.colorScheme.error
+                    text = errorMessage, color = MaterialTheme.colorScheme.error
                 )
             }
         },
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Password,
-            imeAction = imeAction
+            keyboardType = KeyboardType.Password, imeAction = imeAction
         ),
         keyboardActions = KeyboardActions(
-            onDone = { onImeAction() }
-        ),
+            onDone = { onImeAction() }),
         singleLine = true,
         shape = RoundedCornerShape(8.dp),
         colors = OutlinedTextFieldDefaults.colors(
@@ -162,9 +150,7 @@ fun PasswordTextField(
 fun EmailTextFieldPreview() {
     MaterialTheme {
         EmailTextField(
-            value = "user@example.com",
-            onValueChange = {},
-            modifier = Modifier.fillMaxWidth()
+            value = "user@example.com", onValueChange = {}, modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -174,9 +160,7 @@ fun EmailTextFieldPreview() {
 fun PasswordTextFieldPreview() {
     MaterialTheme {
         PasswordTextField(
-            value = "password123",
-            onValueChange = {},
-            modifier = Modifier.fillMaxWidth()
+            value = "password123", onValueChange = {}, modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -227,28 +211,21 @@ fun NicknameTextField(
         label = { Text(text = label, fontFamily = fontFamilyVeil) },
         leadingIcon = {
             Icon(
-                imageVector = Icons.Default.Person,
-                contentDescription = null,
-                tint = Color.White
+                imageVector = Icons.Default.Person, contentDescription = null, tint = Color.White
             )
         },
         isError = isError,
         supportingText = {
             if (isError && errorMessage != null) {
                 Text(
-                    text = errorMessage,
-                    color = MaterialTheme.colorScheme.error
+                    text = errorMessage, color = MaterialTheme.colorScheme.error
                 )
             }
         },
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Text,
-            imeAction = imeAction
+            keyboardType = KeyboardType.Text, imeAction = imeAction
         ),
-        keyboardActions = KeyboardActions(
-            onDone = { onImeAction() },
-            onNext = { onImeAction() }
-        ),
+        keyboardActions = KeyboardActions(onDone = { onImeAction() }, onNext = { onImeAction() }),
         singleLine = true,
         shape = RoundedCornerShape(8.dp),
         colors = OutlinedTextFieldDefaults.colors(
@@ -281,28 +258,21 @@ fun UrlTextField(
         label = { Text(text = label, fontFamily = fontFamilyVeil) },
         leadingIcon = {
             Icon(
-                imageVector = Icons.Default.Link,
-                contentDescription = null,
-                tint = Color.White
+                imageVector = Icons.Default.Link, contentDescription = null, tint = Color.White
             )
         },
         isError = isError,
         supportingText = {
             if (isError && errorMessage != null) {
                 Text(
-                    text = errorMessage,
-                    color = MaterialTheme.colorScheme.error
+                    text = errorMessage, color = MaterialTheme.colorScheme.error
                 )
             }
         },
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Uri,
-            imeAction = imeAction
+            keyboardType = KeyboardType.Uri, imeAction = imeAction
         ),
-        keyboardActions = KeyboardActions(
-            onDone = { onImeAction() },
-            onNext = { onImeAction() }
-        ),
+        keyboardActions = KeyboardActions(onDone = { onImeAction() }, onNext = { onImeAction() }),
         singleLine = true,
         shape = RoundedCornerShape(8.dp),
         colors = OutlinedTextFieldDefaults.colors(
@@ -322,9 +292,7 @@ fun UrlTextField(
 fun NicknameTextFieldPreview() {
     MaterialTheme {
         NicknameTextField(
-            value = "gamer123",
-            onValueChange = {},
-            modifier = Modifier.fillMaxWidth()
+            value = "gamer123", onValueChange = {}, modifier = Modifier.fillMaxWidth()
         )
     }
 }

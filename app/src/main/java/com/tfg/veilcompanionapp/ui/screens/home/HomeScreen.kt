@@ -59,8 +59,7 @@ fun HomeScreen(
         uiState = uiState,
         onFriendsClick = onFriendsClick,
         onLogoutClick = onLogoutClick,
-        onRefresh = { viewModel.refreshData() }
-    )
+        onRefresh = { viewModel.refreshData() })
 }
 
 @Composable
@@ -77,8 +76,7 @@ fun HomeContent(
     ) {
         if (uiState.isLoading) {
             CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center),
-                color = VeilTitleColor
+                modifier = Modifier.align(Alignment.Center), color = VeilTitleColor
             )
         } else {
             LazyColumn(
@@ -102,8 +100,7 @@ fun HomeContent(
                             tint = VeilTitleColor,
                             modifier = Modifier
                                 .size(32.dp)
-                                .clickable { onLogoutClick() }
-                        )
+                                .clickable { onLogoutClick() })
 
                         // Username
                         Text(
@@ -122,8 +119,7 @@ fun HomeContent(
                             tint = VeilTitleColor,
                             modifier = Modifier
                                 .size(32.dp)
-                                .clickable { onFriendsClick() }
-                        )
+                                .clickable { onFriendsClick() })
                     }
                 }
 
@@ -281,8 +277,7 @@ fun HomeScreenPreview() {
             duration = "01:01",
             winner = "",
             reward = "+10 pesos"
-        ),
-        Game(
+        ), Game(
             id = 2L,
             date = "01/01/1970",
             role = "Asesino / Inocente",
@@ -295,15 +290,8 @@ fun HomeScreenPreview() {
     MaterialTheme {
         HomeContent(
             uiState = HomeUiState(
-                username = "Username",
-                points = 100,
-                friends = 5,
-                coins = 200,
-                games = sampleGames
-            ),
-            onFriendsClick = {},
-            onRefresh = {},
-            onLogoutClick = TODO()
+            username = "Username", points = 100, friends = 5, coins = 200, games = sampleGames
+        ), onFriendsClick = {}, onRefresh = {}, onLogoutClick = TODO()
         )
     }
 }
@@ -314,15 +302,8 @@ fun HomeScreenEmptyGamesPreview() {
     MaterialTheme {
         HomeContent(
             uiState = HomeUiState(
-                username = "Username",
-                points = 100,
-                friends = 5,
-                coins = 200,
-                games = emptyList()
-            ),
-            onFriendsClick = {},
-            onRefresh = {},
-            onLogoutClick = TODO()
+            username = "Username", points = 100, friends = 5, coins = 200, games = emptyList()
+        ), onFriendsClick = {}, onRefresh = {}, onLogoutClick = TODO()
         )
     }
 }
@@ -333,11 +314,8 @@ fun HomeScreenLoadingPreview() {
     MaterialTheme {
         HomeContent(
             uiState = HomeUiState(
-                isLoading = true
-            ),
-            onFriendsClick = {},
-            onRefresh = {},
-            onLogoutClick = TODO()
+            isLoading = true
+        ), onFriendsClick = {}, onRefresh = {}, onLogoutClick = TODO()
         )
     }
 }
@@ -348,16 +326,13 @@ fun HomeScreenErrorPreview() {
     MaterialTheme {
         HomeContent(
             uiState = HomeUiState(
-                username = "Username",
-                points = 100,
-                friends = 5,
-                coins = 200,
-                games = emptyList(),
-                error = "Error al cargar los datos"
-            ),
-            onFriendsClick = {},
-            onRefresh = {},
-            onLogoutClick = TODO()
+            username = "Username",
+            points = 100,
+            friends = 5,
+            coins = 200,
+            games = emptyList(),
+            error = "Error al cargar los datos"
+        ), onFriendsClick = {}, onRefresh = {}, onLogoutClick = TODO()
         )
     }
 }

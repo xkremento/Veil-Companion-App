@@ -14,32 +14,23 @@ class RetrofitClient @Inject constructor(
 ) {
 
     fun getApiService(baseUrl: String): ApiService {
-        // Configurar el cliente OkHttp con interceptores
+        // Configure the OkHttp client with interceptors
         val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
 
-        val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(authInterceptor)
-            .addInterceptor(httpLoggingInterceptor)
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .build()
+        val okHttpClient = OkHttpClient.Builder().addInterceptor(authInterceptor)
+            .addInterceptor(httpLoggingInterceptor).connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS).writeTimeout(30, TimeUnit.SECONDS).build()
 
-        // Configurar Gson para manejar nulos adecuadamente
-        val gson = GsonBuilder()
-            .setLenient()
-            .create()
+        // Configure Gson to handle nulls properly
+        val gson = GsonBuilder().setLenient().create()
 
-        // Crear el cliente Retrofit
-        val retrofit = Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
+        // Create Retrofit client
+        val retrofit = Retrofit.Builder().baseUrl(baseUrl).client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create(gson)).build()
 
-        // Crear y devolver la implementación de la API
+        // Create and return the API implementation
         return retrofit.create(ApiService::class.java)
     }
 }

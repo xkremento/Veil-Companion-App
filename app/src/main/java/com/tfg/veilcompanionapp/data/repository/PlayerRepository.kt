@@ -20,7 +20,7 @@ class PlayerRepository @Inject constructor(
             if (response.isSuccessful && response.body() != null) {
                 val playerDto = response.body()!!
 
-                // Mapear DTO a modelo de dominio
+                // Map DTO to domain model
                 val player = Player(
                     email = playerDto.email,
                     nickname = playerDto.nickname,

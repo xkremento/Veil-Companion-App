@@ -27,10 +27,7 @@ import com.tfg.veilcompanionapp.ui.theme.fontFamilyVeil
 
 @Composable
 fun AuthButton(
-    isLogin: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true
+    isLogin: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true
 ) {
     val buttonText = if (isLogin) {
         stringResource(R.string.login_string)
@@ -77,9 +74,7 @@ fun AuthButton(
             colors = buttonColors
         ) {
             Text(
-                text = buttonText,
-                fontFamily = fontFamilyVeil,
-                fontSize = 20.sp
+                text = buttonText, fontFamily = fontFamilyVeil, fontSize = 20.sp
             )
         }
     }
@@ -90,9 +85,7 @@ fun AuthButton(
 fun LoginButtonPreview() {
     MaterialTheme {
         AuthButton(
-            isLogin = true,
-            onClick = {},
-            modifier = Modifier.padding(16.dp)
+            isLogin = true, onClick = {}, modifier = Modifier.padding(16.dp)
         )
     }
 }
@@ -102,14 +95,12 @@ fun LoginButtonPreview() {
 fun RegisterButtonPreview() {
     MaterialTheme {
         AuthButton(
-            isLogin = false,
-            onClick = {},
-            modifier = Modifier.padding(16.dp)
+            isLogin = false, onClick = {}, modifier = Modifier.padding(16.dp)
         )
     }
 }
 
-// Botones add y back
+// Add and back buttons
 
 @Composable
 fun BtnComponent(
@@ -119,13 +110,10 @@ fun BtnComponent(
     modifier: Modifier = Modifier
 ) {
     IconButton(
-        onClick = onClick,
-        modifier = modifier
+        onClick = onClick, modifier = modifier
     ) {
         Icon(
-            imageVector = icon,
-            contentDescription = contentDescription,
-            tint = VeilIconColor
+            imageVector = icon, contentDescription = contentDescription, tint = VeilIconColor
         )
     }
 }
@@ -137,8 +125,7 @@ fun BtnBackPreview() {
         BtnComponent(
             icon = Icons.AutoMirrored.Filled.ArrowBack,
             contentDescription = stringResource(R.string.back_string),
-            onClick = {}
-        )
+            onClick = {})
     }
 }
 
@@ -149,7 +136,6 @@ fun AddFriendIconButtonPreview() {
         BtnComponent(
             icon = Icons.Default.Person,
             contentDescription = stringResource(R.string.add_friend_string),
-            onClick = {}
-        )
+            onClick = {})
     }
 }

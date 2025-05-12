@@ -47,11 +47,11 @@ fun LoginScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    // Efecto para navegar después de un login exitoso
+    // Effect to navigate after a successful login
     LaunchedEffect(uiState.isLoginSuccessful) {
         if (uiState.isLoginSuccessful) {
             onLoginSuccess()
-            // Resetear el estado para futuros logins
+            // Reset state for future logins
             viewModel.resetState()
         }
     }
@@ -152,9 +152,7 @@ fun LoginContent(
 
                 // Login button
                 AuthButton(
-                    isLogin = true,
-                    onClick = onLoginClick,
-                    enabled = !isLoading
+                    isLogin = true, onClick = onLoginClick, enabled = !isLoading
                 )
 
                 if (isLoading) {
@@ -189,8 +187,7 @@ fun LoginScreenPreview() {
             password = "",
             onPasswordChange = {},
             onLoginClick = {},
-            onBackClick = {}
-        )
+            onBackClick = {})
     }
 }
 
@@ -204,8 +201,7 @@ fun LoginScreenWithDataPreview() {
             password = "password123",
             onPasswordChange = {},
             onLoginClick = {},
-            onBackClick = {}
-        )
+            onBackClick = {})
     }
 }
 

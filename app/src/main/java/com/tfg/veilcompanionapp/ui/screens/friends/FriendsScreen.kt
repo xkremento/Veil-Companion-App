@@ -57,8 +57,7 @@ fun FriendsScreen(
         onAddFriendClick = onAddFriendClick,
         onFriendRequestsClick = onFriendRequestsClick,
         onDeleteFriend = { friendId -> viewModel.deleteFriend(friendId) },
-        onRefresh = { viewModel.refreshFriends() }
-    )
+        onRefresh = { viewModel.refreshFriends() })
 }
 
 @Composable
@@ -112,8 +111,7 @@ fun FriendsContent(
             if (uiState.isLoading) {
                 // Loading Indicator
                 Box(
-                    modifier = Modifier.weight(1f),
-                    contentAlignment = Alignment.Center
+                    modifier = Modifier.weight(1f), contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator(
                         color = VeilTitleColor
@@ -127,8 +125,7 @@ fun FriendsContent(
                 ) {
                     items(uiState.friends) { friend ->
                         FriendCard(
-                            friend = friend,
-                            onDeleteClick = onDeleteFriend
+                            friend = friend, onDeleteClick = onDeleteFriend
                         )
                     }
 
@@ -166,8 +163,7 @@ fun FriendsContent(
                     onClick = onAddFriendClick,
                     shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.White,
-                        contentColor = Color.Black
+                        containerColor = Color.White, contentColor = Color.Black
                     ),
                     modifier = Modifier.weight(1f)
                 ) {
@@ -185,8 +181,7 @@ fun FriendsContent(
                     onClick = onFriendRequestsClick,
                     shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.White,
-                        contentColor = Color.Black
+                        containerColor = Color.White, contentColor = Color.Black
                     ),
                     modifier = Modifier.weight(1f)
                 ) {
@@ -217,38 +212,26 @@ fun FriendsContent(
 fun FriendsScreenPreview() {
     val sampleFriends = listOf(
         Friend(
-            id = "1",
-            username = "username1",
-            profileImageUrl = null
-        ),
-        Friend(
-            id = "2",
-            username = "username2",
-            profileImageUrl = null
-        ),
-        Friend(
-            id = "3",
-            username = "username3",
-            profileImageUrl = null
-        ),
-        Friend(
-            id = "4",
-            username = "username4",
-            profileImageUrl = null
+            id = "1", username = "username1", profileImageUrl = null
+        ), Friend(
+            id = "2", username = "username2", profileImageUrl = null
+        ), Friend(
+            id = "3", username = "username3", profileImageUrl = null
+        ), Friend(
+            id = "4", username = "username4", profileImageUrl = null
         )
     )
 
     MaterialTheme {
         FriendsContent(
             uiState = FriendsUiState(
-                friends = sampleFriends
-            ),
+            friends = sampleFriends
+        ),
             onBackClick = {},
             onAddFriendClick = {},
             onFriendRequestsClick = {},
             onDeleteFriend = {},
-            onRefresh = {}
-        )
+            onRefresh = {})
     }
 }
 
@@ -258,14 +241,13 @@ fun FriendsScreenEmptyPreview() {
     MaterialTheme {
         FriendsContent(
             uiState = FriendsUiState(
-                friends = emptyList()
-            ),
+            friends = emptyList()
+        ),
             onBackClick = {},
             onAddFriendClick = {},
             onFriendRequestsClick = {},
             onDeleteFriend = {},
-            onRefresh = {}
-        )
+            onRefresh = {})
     }
 }
 
@@ -275,13 +257,12 @@ fun FriendsScreenLoadingPreview() {
     MaterialTheme {
         FriendsContent(
             uiState = FriendsUiState(
-                isLoading = true
-            ),
+            isLoading = true
+        ),
             onBackClick = {},
             onAddFriendClick = {},
             onFriendRequestsClick = {},
             onDeleteFriend = {},
-            onRefresh = {}
-        )
+            onRefresh = {})
     }
 }

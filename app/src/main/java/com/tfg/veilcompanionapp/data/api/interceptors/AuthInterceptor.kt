@@ -14,24 +14,23 @@ class AuthInterceptor @Inject constructor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 
-        // Para las rutas que no necesitan autenticación, no añadir token
+        // For routes that don't need authentication, don't add token
         val path = request.url.encodedPath
         if (path.contains("/api/auth/login") || path.contains("/api/auth/register")) {
             return chain.proceed(request)
         }
 
-        // Obtenemos el token JWT de DataStore
-        // Nota: Esto es un bloqueo en un contexto síncrono, pero es necesario para el interceptor
+        // Get JWT token from DataStore
         val token = runBlocking {
             userPreferences.authToken.first()
         }
 
-        // Si no hay token, procedemos sin él
+        // If there's no token, proceed without it
         if (token.isNullOrEmpty()) {
             return chain.proceed(request)
         }
 
-        // Añadimos el token al header de la petición
+        // Add token to request header
         val authenticatedRequest = request.newBuilder()
             .header("Authorization", "Bearer $token")
             .build()
