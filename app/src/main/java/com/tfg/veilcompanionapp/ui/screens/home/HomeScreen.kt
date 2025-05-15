@@ -93,7 +93,7 @@ fun HomeContent(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        // Logout Icon Button (NUEVO)
+                        // Logout Icon Button
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ExitToApp,
                             contentDescription = stringResource(R.string.logout_string),
@@ -291,8 +291,7 @@ fun HomeScreenPreview() {
         HomeContent(
             uiState = HomeUiState(
             username = "Username", points = 100, friends = 5, coins = 200, games = sampleGames
-        ), onFriendsClick = {}, onRefresh = {}, onLogoutClick = TODO()
-        )
+        ), onFriendsClick = {}, onLogoutClick = {}, onRefresh = {})
     }
 }
 
@@ -303,8 +302,7 @@ fun HomeScreenEmptyGamesPreview() {
         HomeContent(
             uiState = HomeUiState(
             username = "Username", points = 100, friends = 5, coins = 200, games = emptyList()
-        ), onFriendsClick = {}, onRefresh = {}, onLogoutClick = TODO()
-        )
+        ), onFriendsClick = {}, onLogoutClick = {}, onRefresh = {})
     }
 }
 
@@ -315,8 +313,7 @@ fun HomeScreenLoadingPreview() {
         HomeContent(
             uiState = HomeUiState(
             isLoading = true
-        ), onFriendsClick = {}, onRefresh = {}, onLogoutClick = TODO()
-        )
+        ), onFriendsClick = {}, onLogoutClick = {}, onRefresh = {})
     }
 }
 
@@ -332,7 +329,6 @@ fun HomeScreenErrorPreview() {
             coins = 200,
             games = emptyList(),
             error = "Error al cargar los datos"
-        ), onFriendsClick = {}, onRefresh = {}, onLogoutClick = TODO()
-        )
+        ), onFriendsClick = {}, onLogoutClick = {}, onRefresh = {})
     }
 }
