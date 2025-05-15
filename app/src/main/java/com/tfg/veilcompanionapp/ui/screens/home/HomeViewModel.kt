@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.tfg.veilcompanionapp.data.repository.GameRepository
 import com.tfg.veilcompanionapp.data.repository.PlayerRepository
 import com.tfg.veilcompanionapp.data.repository.AuthRepository
+import com.tfg.veilcompanionapp.data.repository.FriendRepository
 import com.tfg.veilcompanionapp.domain.model.Game
 import com.tfg.veilcompanionapp.domain.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,6 @@ data class HomeUiState(
     val isLoading: Boolean = false,
     val username: String = "",
     val profileImageUrl: String? = null,
-    val points: Int = 0,
     val friends: Int = 0,
     val coins: Int = 0,
     val games: List<Game> = emptyList(),
@@ -30,6 +30,7 @@ data class HomeUiState(
 class HomeViewModel @Inject constructor(
     private val playerRepository: PlayerRepository,
     private val gameRepository: GameRepository,
+    private val friendRepository: FriendRepository,
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
@@ -38,6 +39,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         loadUserData()
+        loadFriends()
         loadGames()
     }
 
@@ -53,10 +55,6 @@ class HomeViewModel @Inject constructor(
                             isLoading = false,
                             username = player.nickname,
                             profileImageUrl = player.profileImageUrl,
-                            // Assuming that "points" are 0 in this system
-                            points = 0,
-                            // Assuming that the number of friends is not directly available
-                            friends = 0,
                             coins = player.coins
                         )
                     }
@@ -71,8 +69,31 @@ class HomeViewModel @Inject constructor(
                     }
                 }
 
-                else -> { /* Ignore loading state */
+                else -> { /* Ignore loading state */ }
+            }
+        }
+    }
+
+    private fun loadFriends() {
+        viewModelScope.launch {
+            when (val result = friendRepository.getFriends()) {
+                is Result.Success -> {
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            friends = result.data.size
+                        )
+                    }
                 }
+
+                is Result.Error -> {
+                    _uiState.update {
+                        it.copy(
+                            error = "Error al cargar los amigos: ${result.exception.message}"
+                        )
+                    }
+                }
+
+                else -> { /* Ignore loading state */ }
             }
         }
     }
@@ -81,8 +102,13 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = gameRepository.getUserGames()) {
                 is Result.Success -> {
+                    // Actualizar el texto de recompensa para cambiar "pesos" a "monedas"
+                    val updatedGames = result.data.map { game ->
+                        game.copy(reward = game.reward.replace("pesos", "monedas"))
+                    }
+
                     _uiState.update { currentState ->
-                        currentState.copy(games = result.data)
+                        currentState.copy(games = updatedGames)
                     }
                 }
 
@@ -94,14 +120,14 @@ class HomeViewModel @Inject constructor(
                     }
                 }
 
-                else -> { /* Ignore loading state */
-                }
+                else -> { /* Ignore loading state */ }
             }
         }
     }
 
     fun refreshData() {
         loadUserData()
+        loadFriends()
         loadGames()
     }
 

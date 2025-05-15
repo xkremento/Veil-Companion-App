@@ -151,27 +151,7 @@ fun HomeContent(
 
                         Spacer(modifier = Modifier.width(24.dp))
 
-                        // Stats
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = uiState.points.toString(),
-                                fontFamily = fontFamilyVeil,
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
-                            )
-                            Text(
-                                text = stringResource(R.string.points_string),
-                                fontFamily = fontFamilyVeil,
-                                fontSize = 16.sp,
-                                color = Color.White
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.width(24.dp))
-
+                        // Stats: Friends
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
@@ -192,6 +172,7 @@ fun HomeContent(
 
                         Spacer(modifier = Modifier.width(24.dp))
 
+                        // Stats: Coins (cambiado de "Pesos")
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
@@ -276,22 +257,29 @@ fun HomeScreenPreview() {
             role = "Asesino / Inocente",
             duration = "01:01",
             winner = "",
-            reward = "+10 pesos"
+            reward = "+10 monedas"
         ), Game(
             id = 2L,
             date = "01/01/1970",
             role = "Asesino / Inocente",
             duration = "01:01",
             winner = "",
-            reward = "+10 pesos"
+            reward = "+10 monedas"
         )
     )
 
     MaterialTheme {
         HomeContent(
             uiState = HomeUiState(
-            username = "Username", points = 100, friends = 5, coins = 200, games = sampleGames
-        ), onFriendsClick = {}, onLogoutClick = {}, onRefresh = {})
+                username = "Username",
+                friends = 5,
+                coins = 200,
+                games = sampleGames
+            ),
+            onFriendsClick = {},
+            onLogoutClick = {},
+            onRefresh = {}
+        )
     }
 }
 
@@ -301,8 +289,15 @@ fun HomeScreenEmptyGamesPreview() {
     MaterialTheme {
         HomeContent(
             uiState = HomeUiState(
-            username = "Username", points = 100, friends = 5, coins = 200, games = emptyList()
-        ), onFriendsClick = {}, onLogoutClick = {}, onRefresh = {})
+                username = "Username",
+                friends = 5,
+                coins = 200,
+                games = emptyList()
+            ),
+            onFriendsClick = {},
+            onLogoutClick = {},
+            onRefresh = {}
+        )
     }
 }
 
@@ -312,8 +307,12 @@ fun HomeScreenLoadingPreview() {
     MaterialTheme {
         HomeContent(
             uiState = HomeUiState(
-            isLoading = true
-        ), onFriendsClick = {}, onLogoutClick = {}, onRefresh = {})
+                isLoading = true
+            ),
+            onFriendsClick = {},
+            onLogoutClick = {},
+            onRefresh = {}
+        )
     }
 }
 
@@ -323,12 +322,15 @@ fun HomeScreenErrorPreview() {
     MaterialTheme {
         HomeContent(
             uiState = HomeUiState(
-            username = "Username",
-            points = 100,
-            friends = 5,
-            coins = 200,
-            games = emptyList(),
-            error = "Error al cargar los datos"
-        ), onFriendsClick = {}, onLogoutClick = {}, onRefresh = {})
+                username = "Username",
+                friends = 5,
+                coins = 200,
+                games = emptyList(),
+                error = "Error al cargar los datos"
+            ),
+            onFriendsClick = {},
+            onLogoutClick = {},
+            onRefresh = {}
+        )
     }
 }
