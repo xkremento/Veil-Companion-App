@@ -74,7 +74,7 @@ fun FriendRequestCard(
 
             // Username
             Text(
-                text = "$${friendRequest.requesterUsername}",
+                text = friendRequest.requesterUsername,
                 fontFamily = fontFamilyVeil,
                 fontSize = 18.sp,
                 color = Color.Black,
@@ -113,11 +113,11 @@ fun FriendRequestCardPreview() {
     MaterialTheme {
         FriendRequestCard(
             friendRequest = FriendRequest(
-            id = 1,
-            requesterId = "user123",
-            requesterUsername = "username",
-            requesterProfileImageUrl = null
-        ), onAcceptClick = {}, onRejectClick = {}, modifier = Modifier.padding(16.dp)
+                id = 1,
+                requesterId = "user123",
+                requesterUsername = "username",
+                requesterProfileImageUrl = null
+            ), onAcceptClick = {}, onRejectClick = {}, modifier = Modifier.padding(16.dp)
         )
     }
 }

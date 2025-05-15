@@ -67,7 +67,7 @@ fun FriendCard(
 
             // Username
             Text(
-                text = "$${friend.username}",
+                text = friend.username,
                 fontFamily = fontFamilyVeil,
                 fontSize = 18.sp,
                 color = Color.Black,
