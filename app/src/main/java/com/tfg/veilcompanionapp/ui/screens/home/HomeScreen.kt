@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -114,7 +115,7 @@ fun HomeContent(
 
                         // Friends Icon Button
                         Icon(
-                            imageVector = Icons.Default.Person,
+                            imageVector = Icons.Default.Groups,
                             contentDescription = stringResource(R.string.friends_string),
                             tint = VeilTitleColor,
                             modifier = Modifier
