@@ -204,31 +204,44 @@ fun HomeContent(
                     )
                 }
 
-                // Game History Cards
-                items(uiState.games) { game ->
-                    GameHistoryCard(
-                        date = game.date,
-                        role = game.role,
-                        duration = game.duration,
-                        winner = game.winner,
-                        reward = game.reward,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-                }
-
-                // If no game history, show placeholder
-                if (uiState.games.isEmpty()) {
+                if (uiState.isGamesLoading) {
                     item {
-                        Text(
-                            text = stringResource(R.string.no_games_string),
-                            fontFamily = fontFamilyVeil,
-                            fontSize = 16.sp,
-                            color = Color.LightGray,
-                            textAlign = TextAlign.Center,
+                        Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(32.dp)
+                                .padding(16.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator(color = VeilTitleColor)
+                        }
+                    }
+                } else {
+                    // Game History Cards
+                    items(uiState.games) { game ->
+                        GameHistoryCard(
+                            date = game.date,
+                            role = game.role,
+                            duration = game.duration,
+                            winner = game.winner,
+                            reward = game.reward,
+                            modifier = Modifier.padding(bottom = 16.dp)
                         )
+                    }
+
+                    // If no game history, show placeholder
+                    if (uiState.games.isEmpty()) {
+                        item {
+                            Text(
+                                text = stringResource(R.string.no_games_string),
+                                fontFamily = fontFamilyVeil,
+                                fontSize = 16.sp,
+                                color = Color.LightGray,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(32.dp)
+                            )
+                        }
                     }
                 }
             }
@@ -254,14 +267,14 @@ fun HomeScreenPreview() {
         Game(
             id = 1L,
             date = "01/01/1970",
-            role = "Asesino / Inocente",
+            role = "Asesino",
             duration = "01:01",
             winner = "",
             reward = "+10 monedas"
         ), Game(
             id = 2L,
             date = "01/01/1970",
-            role = "Asesino / Inocente",
+            role = "Inocente",
             duration = "01:01",
             winner = "",
             reward = "+10 monedas"
@@ -308,6 +321,24 @@ fun HomeScreenLoadingPreview() {
         HomeContent(
             uiState = HomeUiState(
                 isLoading = true
+            ),
+            onFriendsClick = {},
+            onLogoutClick = {},
+            onRefresh = {}
+        )
+    }
+}
+
+@Preview(showBackground = true, widthDp = 360, heightDp = 640)
+@Composable
+fun HomeScreenGamesLoadingPreview() {
+    MaterialTheme {
+        HomeContent(
+            uiState = HomeUiState(
+                username = "Username",
+                friends = 5,
+                coins = 200,
+                isGamesLoading = true
             ),
             onFriendsClick = {},
             onLogoutClick = {},

@@ -3,6 +3,7 @@ package com.tfg.veilcompanionapp.ui.screens.friends
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tfg.veilcompanionapp.data.repository.FriendRepository
+import com.tfg.veilcompanionapp.data.repository.PlayerRepository
 import com.tfg.veilcompanionapp.domain.model.FriendRequest
 import com.tfg.veilcompanionapp.domain.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +22,8 @@ data class FriendRequestsUiState(
 
 @HiltViewModel
 class FriendRequestsViewModel @Inject constructor(
-    private val friendRepository: FriendRepository
+    private val friendRepository: FriendRepository,
+    private val playerRepository: PlayerRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(FriendRequestsUiState())
@@ -39,7 +41,8 @@ class FriendRequestsViewModel @Inject constructor(
                 is Result.Success -> {
                     _uiState.update { currentState ->
                         currentState.copy(
-                            isLoading = false, friendRequests = result.data
+                            isLoading = false,
+                            friendRequests = result.data
                         )
                     }
                 }
@@ -48,13 +51,12 @@ class FriendRequestsViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            error = "Error al cargar las solicitudes de amistad: ${result.exception.message}"
+                            error = "Error loading friend requests: ${result.exception.message}"
                         )
                     }
                 }
 
-                else -> { /* Ignore loading state */
-                }
+                else -> { /* Ignore loading state */ }
             }
         }
     }
@@ -71,12 +73,11 @@ class FriendRequestsViewModel @Inject constructor(
 
                 is Result.Error -> {
                     _uiState.update {
-                        it.copy(error = "Error al aceptar la solicitud: ${result.exception.message}")
+                        it.copy(error = "Error accepting request: ${result.exception.message}")
                     }
                 }
 
-                else -> { /* Ignore loading state */
-                }
+                else -> { /* Ignore loading state */ }
             }
         }
     }
@@ -85,7 +86,7 @@ class FriendRequestsViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = friendRepository.rejectFriendRequest(requestId)) {
                 is Result.Success -> {
-                    // Actualizar la lista de solicitudes localmente
+                    // Update the requests list locally
                     val updatedRequests =
                         _uiState.value.friendRequests.filter { it.id != requestId }
                     _uiState.update { it.copy(friendRequests = updatedRequests) }
@@ -93,12 +94,11 @@ class FriendRequestsViewModel @Inject constructor(
 
                 is Result.Error -> {
                     _uiState.update {
-                        it.copy(error = "Error al rechazar la solicitud: ${result.exception.message}")
+                        it.copy(error = "Error rejecting request: ${result.exception.message}")
                     }
                 }
 
-                else -> { /* Ignore loading state */
-                }
+                else -> { /* Ignore loading state */ }
             }
         }
     }

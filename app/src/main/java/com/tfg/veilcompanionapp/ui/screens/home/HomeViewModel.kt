@@ -18,6 +18,7 @@ import javax.inject.Inject
 
 data class HomeUiState(
     val isLoading: Boolean = false,
+    val isGamesLoading: Boolean = false,
     val username: String = "",
     val profileImageUrl: String? = null,
     val friends: Int = 0,
@@ -69,7 +70,8 @@ class HomeViewModel @Inject constructor(
                     }
                 }
 
-                else -> { /* Ignore loading state */ }
+                else -> { /* Ignore loading state */
+                }
             }
         }
     }
@@ -93,34 +95,54 @@ class HomeViewModel @Inject constructor(
                     }
                 }
 
-                else -> { /* Ignore loading state */ }
+                else -> { /* Ignore loading state */
+                }
             }
         }
     }
 
     private fun loadGames() {
         viewModelScope.launch {
+
+            _uiState.update { it.copy(isGamesLoading = true) }
+
             when (val result = gameRepository.getUserGames()) {
                 is Result.Success -> {
-                    // Actualizar el texto de recompensa para cambiar "pesos" a "monedas"
-                    val updatedGames = result.data.map { game ->
-                        game.copy(reward = game.reward.replace("pesos", "monedas"))
+                    val updatedGamesWithRoleInfo = mutableListOf<Game>()
+
+                    for (game in result.data) {
+                        val wasPlayerMurderer = when (val roleResult =
+                            gameRepository.wasPlayerMurdererInGame(game.id)) {
+                            is Result.Success -> roleResult.data
+                            else -> false
+                        }
+
+                        val updatedGame = game.copy(
+                            role = if (wasPlayerMurderer) "Asesino" else "Inocente",
+                            reward = game.reward.replace("pesos", "monedas")
+                        )
+
+                        updatedGamesWithRoleInfo.add(updatedGame)
                     }
 
                     _uiState.update { currentState ->
-                        currentState.copy(games = updatedGames)
+                        currentState.copy(
+                            games = updatedGamesWithRoleInfo, isGamesLoading = false
+                        )
                     }
                 }
 
                 is Result.Error -> {
                     _uiState.update {
                         it.copy(
-                            error = "Error al cargar las partidas: ${result.exception.message}"
+                            error = "Error al cargar las partidas: ${result.exception.message}",
+                            isGamesLoading = false
                         )
                     }
                 }
 
-                else -> { /* Ignore loading state */ }
+                else -> { /* Ignore loading state */
+                }
             }
         }
     }

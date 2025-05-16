@@ -64,4 +64,19 @@ class GameRepository @Inject constructor(
             dateTimeString // Fallback to original string if parsing fails
         }
     }
+
+    suspend fun wasPlayerMurdererInGame(gameId: Long): Result<Boolean> {
+        return try {
+            val response = apiService.checkIfPlayerWasMurderer(gameId)
+
+            if (response.isSuccessful && response.body() != null) {
+                val wasMurderer = response.body()!!["wasMurderer"] ?: false
+                Result.Success(wasMurderer)
+            } else {
+                Result.Error(Exception("Error al comprobar el rol: ${response.message()}"))
+            }
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
 }

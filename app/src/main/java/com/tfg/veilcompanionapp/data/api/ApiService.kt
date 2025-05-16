@@ -69,4 +69,7 @@ interface ApiService {
 
     @GET("/api/games")
     suspend fun getMyGames(): Response<List<GameResponseDTO>>
+
+    @GET("/api/games/{gameId}/was-murderer")
+    suspend fun checkIfPlayerWasMurderer(@Path("gameId") gameId: Long): Response<Map<String, Boolean>>
 }

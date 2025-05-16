@@ -55,11 +55,14 @@ fun GameHistoryCard(
                     text = date, fontFamily = fontFamilyVeil, fontSize = 14.sp, color = Color.Black
                 )
 
+                val roleColor = when (role) {
+                    "Asesino" -> Color.Red
+                    "Inocente" -> Color.Blue
+                    else -> VeilTitleColor
+                }
+
                 Text(
-                    text = role,
-                    fontFamily = fontFamilyVeil,
-                    fontSize = 14.sp,
-                    color = VeilTitleColor
+                    text = role, fontFamily = fontFamilyVeil, fontSize = 14.sp, color = roleColor
                 )
             }
 
@@ -139,7 +142,22 @@ fun GameHistoryCardPreview() {
     MaterialTheme {
         GameHistoryCard(
             date = "01/01/1970",
-            role = "Asesino / Inocente",
+            role = "Asesino",
+            duration = "01:01",
+            winner = "",
+            reward = "+10 pesos",
+            modifier = Modifier.padding(16.dp)
+        )
+    }
+}
+
+@Preview(showBackground = true, widthDp = 360)
+@Composable
+fun GameHistoryCardInnocentPreview() {
+    MaterialTheme {
+        GameHistoryCard(
+            date = "01/01/1970",
+            role = "Inocente",
             duration = "01:01",
             winner = "",
             reward = "+10 pesos",
