@@ -129,7 +129,7 @@ fun HomeContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 32.dp),
-                        horizontalArrangement = Arrangement.Start,
+                        horizontalArrangement = Arrangement.SpaceEvenly,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         // Profile Image
@@ -149,46 +149,67 @@ fun HomeContent(
                             }
                         }
 
-                        Spacer(modifier = Modifier.width(24.dp))
-
-                        // Stats: Friends
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
+                        // Use Row with SpaceEvenly for an even distribution of stats
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                            modifier = Modifier.weight(1f).padding(start = 16.dp)
                         ) {
-                            Text(
-                                text = uiState.friends.toString(),
-                                fontFamily = fontFamilyVeil,
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
-                            )
-                            Text(
-                                text = stringResource(R.string.friends_string),
-                                fontFamily = fontFamilyVeil,
-                                fontSize = 16.sp,
-                                color = Color.White
-                            )
-                        }
+                            // Stats: Friends
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = uiState.friends.toString(),
+                                    fontFamily = fontFamilyVeil,
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
+                                )
+                                Text(
+                                    text = stringResource(R.string.friends_string),
+                                    fontFamily = fontFamilyVeil,
+                                    fontSize = 16.sp,
+                                    color = Color.White
+                                )
+                            }
 
-                        Spacer(modifier = Modifier.width(24.dp))
+                            // Stats: Games
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = uiState.gamesCount.toString(),
+                                    fontFamily = fontFamilyVeil,
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
+                                )
+                                Text(
+                                    text = stringResource(R.string.games_string), // You'll need to add this string
+                                    fontFamily = fontFamilyVeil,
+                                    fontSize = 16.sp,
+                                    color = Color.White
+                                )
+                            }
 
-                        // Stats: Coins (cambiado de "Pesos")
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = uiState.coins.toString(),
-                                fontFamily = fontFamilyVeil,
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
-                            )
-                            Text(
-                                text = stringResource(R.string.coins_string),
-                                fontFamily = fontFamilyVeil,
-                                fontSize = 16.sp,
-                                color = Color.White
-                            )
+                            // Stats: Coins
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = uiState.coins.toString(),
+                                    fontFamily = fontFamilyVeil,
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
+                                )
+                                Text(
+                                    text = stringResource(R.string.coins_string),
+                                    fontFamily = fontFamilyVeil,
+                                    fontSize = 16.sp,
+                                    color = Color.White
+                                )
+                            }
                         }
                     }
                 }
@@ -204,6 +225,7 @@ fun HomeContent(
                     )
                 }
 
+                // Games section with loading state
                 if (uiState.isGamesLoading) {
                     item {
                         Box(
@@ -287,6 +309,7 @@ fun HomeScreenPreview() {
                 username = "Username",
                 friends = 5,
                 coins = 200,
+                gamesCount = 2, // Added games count
                 games = sampleGames
             ),
             onFriendsClick = {},
@@ -305,6 +328,7 @@ fun HomeScreenEmptyGamesPreview() {
                 username = "Username",
                 friends = 5,
                 coins = 200,
+                gamesCount = 0, // Zero games
                 games = emptyList()
             ),
             onFriendsClick = {},
@@ -338,6 +362,7 @@ fun HomeScreenGamesLoadingPreview() {
                 username = "Username",
                 friends = 5,
                 coins = 200,
+                gamesCount = 0, // No games count while loading
                 isGamesLoading = true
             ),
             onFriendsClick = {},
@@ -356,6 +381,7 @@ fun HomeScreenErrorPreview() {
                 username = "Username",
                 friends = 5,
                 coins = 200,
+                gamesCount = 0,
                 games = emptyList(),
                 error = "Error al cargar los datos"
             ),

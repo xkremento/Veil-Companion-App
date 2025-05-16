@@ -23,6 +23,7 @@ data class HomeUiState(
     val profileImageUrl: String? = null,
     val friends: Int = 0,
     val coins: Int = 0,
+    val gamesCount: Int = 0,
     val games: List<Game> = emptyList(),
     val error: String? = null
 )
@@ -70,8 +71,7 @@ class HomeViewModel @Inject constructor(
                     }
                 }
 
-                else -> { /* Ignore loading state */
-                }
+                else -> { /* Ignore loading state */ }
             }
         }
     }
@@ -95,28 +95,28 @@ class HomeViewModel @Inject constructor(
                     }
                 }
 
-                else -> { /* Ignore loading state */
-                }
+                else -> { /* Ignore loading state */ }
             }
         }
     }
 
     private fun loadGames() {
         viewModelScope.launch {
-
             _uiState.update { it.copy(isGamesLoading = true) }
 
             when (val result = gameRepository.getUserGames()) {
                 is Result.Success -> {
+                    // Update the reward text and get the correct player role
                     val updatedGamesWithRoleInfo = mutableListOf<Game>()
 
+                    // For each game, determine if the current player was the murderer
                     for (game in result.data) {
-                        val wasPlayerMurderer = when (val roleResult =
-                            gameRepository.wasPlayerMurdererInGame(game.id)) {
+                        val wasPlayerMurderer = when (val roleResult = gameRepository.wasPlayerMurdererInGame(game.id)) {
                             is Result.Success -> roleResult.data
-                            else -> false
+                            else -> false // Default value if there's an error
                         }
 
+                        // Update the game with correct role and reward text
                         val updatedGame = game.copy(
                             role = if (wasPlayerMurderer) "Asesino" else "Inocente",
                             reward = game.reward.replace("pesos", "monedas")
@@ -127,7 +127,9 @@ class HomeViewModel @Inject constructor(
 
                     _uiState.update { currentState ->
                         currentState.copy(
-                            games = updatedGamesWithRoleInfo, isGamesLoading = false
+                            games = updatedGamesWithRoleInfo,
+                            gamesCount = updatedGamesWithRoleInfo.size, // Update games count
+                            isGamesLoading = false
                         )
                     }
                 }
@@ -141,8 +143,7 @@ class HomeViewModel @Inject constructor(
                     }
                 }
 
-                else -> { /* Ignore loading state */
-                }
+                else -> { /* Ignore loading state */ }
             }
         }
     }
