@@ -241,11 +241,10 @@ fun HomeContent(
                     // Game History Cards
                     items(uiState.games) { game ->
                         GameHistoryCard(
+                            id = game.id,
                             date = game.date,
                             role = game.role,
                             duration = game.duration,
-                            winner = game.winner,
-                            reward = game.reward,
                             modifier = Modifier.padding(bottom = 16.dp)
                         )
                     }
@@ -290,16 +289,12 @@ fun HomeScreenPreview() {
             id = 1L,
             date = "01/01/1970",
             role = "Asesino",
-            duration = "01:01",
-            winner = "",
-            reward = "+10 monedas"
+            duration = "01:01"
         ), Game(
             id = 2L,
             date = "01/01/1970",
             role = "Inocente",
-            duration = "01:01",
-            winner = "",
-            reward = "+10 monedas"
+            duration = "01:01"
         )
     )
 

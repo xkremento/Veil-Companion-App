@@ -106,7 +106,7 @@ class HomeViewModel @Inject constructor(
 
             when (val result = gameRepository.getUserGames()) {
                 is Result.Success -> {
-                    // Update the reward text and get the correct player role
+                    // List to store games with updated role info
                     val updatedGamesWithRoleInfo = mutableListOf<Game>()
 
                     // For each game, determine if the current player was the murderer
@@ -116,10 +116,9 @@ class HomeViewModel @Inject constructor(
                             else -> false // Default value if there's an error
                         }
 
-                        // Update the game with correct role and reward text
+                        // Update the game with correct role
                         val updatedGame = game.copy(
-                            role = if (wasPlayerMurderer) "Asesino" else "Inocente",
-                            reward = game.reward.replace("pesos", "monedas")
+                            role = if (wasPlayerMurderer) "Asesino" else "Inocente"
                         )
 
                         updatedGamesWithRoleInfo.add(updatedGame)
@@ -128,7 +127,7 @@ class HomeViewModel @Inject constructor(
                     _uiState.update { currentState ->
                         currentState.copy(
                             games = updatedGamesWithRoleInfo,
-                            gamesCount = updatedGamesWithRoleInfo.size, // Update games count
+                            gamesCount = updatedGamesWithRoleInfo.size,
                             isGamesLoading = false
                         )
                     }

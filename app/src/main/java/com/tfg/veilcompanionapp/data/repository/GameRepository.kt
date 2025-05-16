@@ -19,15 +19,8 @@ class GameRepository @Inject constructor(
 
             if (response.isSuccessful && response.body() != null) {
                 val games = response.body()!!.map { dto ->
-                    // Check if we are the murderer in this game
-                    val playerData = dto.players.find { it.isMurderer }
-                    val isMurderer = playerData != null
-
                     // Format date/time
-                    val gameDateTime = playerData?.gameDateTime ?: ""
-
-                    // Determine the winner
-                    val winner = ""
+                    val gameDateTime = dto.players.firstOrNull()?.gameDateTime ?: ""
 
                     // Duration format (minutes:seconds)
                     val minutes = dto.duration / 60
@@ -37,10 +30,8 @@ class GameRepository @Inject constructor(
                     Game(
                         id = dto.id,
                         date = formatDateTime(gameDateTime),
-                        role = if (isMurderer) "Asesino" else "Inocente",
-                        duration = duration,
-                        winner = winner,
-                        reward = "+10 pesos"
+                        role = "",
+                        duration = duration
                     )
                 }
 

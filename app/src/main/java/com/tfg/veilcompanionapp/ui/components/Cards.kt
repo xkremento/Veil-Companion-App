@@ -1,13 +1,10 @@
 package com.tfg.veilcompanionapp.ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -28,11 +25,10 @@ import com.tfg.veilcompanionapp.ui.theme.fontFamilyVeil
 
 @Composable
 fun GameHistoryCard(
+    id: Long,
     date: String,
     role: String,
     duration: String,
-    winner: String,
-    reward: String,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -47,35 +43,39 @@ fun GameHistoryCard(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            // Date and Role Row
+            // ID and Date Row
             Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
+                // Game ID
                 Text(
-                    text = date, fontFamily = fontFamilyVeil, fontSize = 14.sp, color = Color.Black
+                    text = "#${id}",
+                    fontFamily = fontFamilyVeil,
+                    fontSize = 14.sp,
+                    color = Color.Gray
                 )
 
-                val roleColor = when (role) {
-                    "Asesino" -> Color.Red
-                    "Inocente" -> Color.Blue
-                    else -> VeilTitleColor
-                }
-
+                // Date
                 Text(
-                    text = role, fontFamily = fontFamilyVeil, fontSize = 14.sp, color = roleColor
+                    text = date,
+                    fontFamily = fontFamilyVeil,
+                    fontSize = 14.sp,
+                    color = Color.Black
                 )
             }
 
-            // Game Details Row
+            // Game Info Row
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                    .padding(top = 12.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 // Duration
                 Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                    horizontalAlignment = Alignment.Start,
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(
@@ -87,48 +87,39 @@ fun GameHistoryCard(
                     Text(
                         text = duration,
                         fontFamily = fontFamilyVeil,
-                        fontSize = 14.sp,
-                        color = Color.Black,
-                        textAlign = TextAlign.Center
+                        fontSize = 16.sp,
+                        color = Color.Black
                     )
                 }
 
-                // Winner
+                // Role
                 Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                    horizontalAlignment = Alignment.End,
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(
-                        text = stringResource(R.string.winner_string),
+                        text = stringResource(R.string.role_string),
                         fontFamily = fontFamilyVeil,
                         fontSize = 12.sp,
-                        color = Color.Gray
+                        color = Color.Gray,
+                        textAlign = TextAlign.End,
+                        modifier = Modifier.fillMaxWidth()
                     )
-                    // Gray box representing winner icon
-                    Box(
-                        modifier = Modifier
-                            .size(24.dp)
-                            .background(Color.Gray)
-                    )
-                }
 
-                // Reward
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.weight(1f)
-                ) {
+                    // Set role color based on role type
+                    val roleColor = when (role) {
+                        "Asesino" -> Color.Red
+                        "Inocente" -> Color.Blue
+                        else -> VeilTitleColor // Default color
+                    }
+
                     Text(
-                        text = stringResource(R.string.reward_string),
+                        text = role,
                         fontFamily = fontFamilyVeil,
-                        fontSize = 12.sp,
-                        color = Color.Gray
-                    )
-                    Text(
-                        text = reward,
-                        fontFamily = fontFamilyVeil,
-                        fontSize = 14.sp,
-                        color = Color.Black,
-                        textAlign = TextAlign.Center
+                        fontSize = 16.sp,
+                        color = roleColor,
+                        textAlign = TextAlign.End,
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
             }
@@ -141,11 +132,10 @@ fun GameHistoryCard(
 fun GameHistoryCardPreview() {
     MaterialTheme {
         GameHistoryCard(
+            id = 12345,
             date = "01/01/1970",
             role = "Asesino",
             duration = "01:01",
-            winner = "",
-            reward = "+10 pesos",
             modifier = Modifier.padding(16.dp)
         )
     }
@@ -156,11 +146,10 @@ fun GameHistoryCardPreview() {
 fun GameHistoryCardInnocentPreview() {
     MaterialTheme {
         GameHistoryCard(
+            id = 54321,
             date = "01/01/1970",
             role = "Inocente",
             duration = "01:01",
-            winner = "",
-            reward = "+10 pesos",
             modifier = Modifier.padding(16.dp)
         )
     }

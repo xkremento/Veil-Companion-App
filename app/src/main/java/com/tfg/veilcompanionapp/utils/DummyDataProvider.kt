@@ -33,17 +33,13 @@ object DummyDataProvider {
             id = 1L,
             date = "01/01/1970",
             role = "Asesino / Inocente",
-            duration = "01:01",
-            winner = "",
-            reward = "+10 pesos"
+            duration = "01:01"
         ),
         Game(
             id = 2L,
             date = "01/01/1970",
             role = "Asesino / Inocente",
-            duration = "01:01",
-            winner = "",
-            reward = "+10 pesos"
+            duration = "01:01"
         )
     )
 
