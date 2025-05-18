@@ -9,12 +9,12 @@ import com.tfg.veilcompanionapp.ui.screens.auth.AuthScreen
 import com.tfg.veilcompanionapp.ui.screens.auth.LoginScreen
 import com.tfg.veilcompanionapp.ui.screens.auth.RegisterScreen
 import com.tfg.veilcompanionapp.ui.screens.friends.AddFriendScreen
-import com.tfg.veilcompanionapp.ui.screens.friends.FriendRequestsScreen
 import com.tfg.veilcompanionapp.ui.screens.friends.FriendsScreen
 import com.tfg.veilcompanionapp.ui.screens.home.HomeScreen
 import com.tfg.veilcompanionapp.ui.screens.home.HomeViewModel
 import com.tfg.veilcompanionapp.ui.screens.splash.SplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.tfg.veilcompanionapp.ui.screens.friends.FriendRequestsScreen
 
 object Route {
     const val SPLASH = "splash"

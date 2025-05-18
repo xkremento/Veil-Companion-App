@@ -15,15 +15,20 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -53,6 +58,7 @@ fun FriendRequestsScreen(
         onRefresh = { viewModel.refreshFriendRequests() })
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FriendRequestsContent(
     uiState: FriendRequestsUiState,
@@ -61,10 +67,23 @@ fun FriendRequestsContent(
     onRejectRequest: (Long) -> Unit,
     onRefresh: () -> Unit
 ) {
+    val pullRefreshState = rememberPullToRefreshState()
+
+    if (pullRefreshState.isRefreshing) {
+        LaunchedEffect(true) {
+            onRefresh()
+            // End refresh when data is loaded
+            if (!uiState.isLoading) {
+                pullRefreshState.endRefresh()
+            }
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(VeilBackgroundColor)
+            .nestedScroll(pullRefreshState.nestedScrollConnection)
     ) {
         Column(
             modifier = Modifier
@@ -96,7 +115,6 @@ fun FriendRequestsContent(
                     modifier = Modifier.weight(1f)
                 )
 
-                // Empty space to balance the back button
                 Spacer(modifier = Modifier.weight(0.2f))
             }
 
@@ -156,6 +174,11 @@ fun FriendRequestsContent(
                 Text(text = error)
             }
         }
+
+        PullToRefreshContainer(
+            modifier = Modifier.align(Alignment.TopCenter),
+            state = pullRefreshState,
+        )
     }
 }
 
