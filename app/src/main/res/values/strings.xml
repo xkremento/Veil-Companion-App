@@ -3,10 +3,10 @@
     <string name="title">Veil</string>
     <string name="subtitle">Tricked</string>
     <string name="denomination">Companion App</string>
-    <string name="login_string">Login</string>
-    <string name="register_string">Register</string>
-    <string name="back_string">Go Back</string>
-    <string name="add_friend_string">Add Friend</string>
+    <string name="login_string">Iniciar Sesión</string>
+    <string name="register_string">Registro</string>
+    <string name="back_string">Ir Atrás</string>
+    <string name="add_friend_string">Añadir Amigo</string>
     <string name="friends_screen_string">Amigos</string>
     <string name="credits">By Alvaro F., Kida G. y Ahmed H.</string>
     <string name="friends_string">Amigos</string>
@@ -29,7 +29,7 @@
     <string name="password_string">Contraseña</string>
     <string name="show_password_string">Mostrar contraseña</string>
     <string name="hide_password_string">Ocultar contraseña</string>
-    <string name="add_friend_instruction">Introduce el correo electrónico del usuario al que quieres enviar una solicitud de amistad:</string>
+    <string name="add_friend_instruction">Introduce el email del usuario al que quieres enviar una solicitud de amistad:</string>
     <string name="send_request_string">Enviar solicitud</string>
     <string name="friend_request_sent">Solicitud de amistad enviada correctamente</string>
     <string name="nickname_string">Nickname</string>

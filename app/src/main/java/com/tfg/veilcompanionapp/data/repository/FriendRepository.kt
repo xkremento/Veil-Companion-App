@@ -42,7 +42,7 @@ class FriendRepository @Inject constructor(
                         id = dto.friendRequestId,
                         requesterId = dto.requesterId,
                         requesterUsername = dto.requesterNickname,
-                        requesterProfileImageUrl = null
+                        requesterProfileImageUrl = dto.requesterProfileImageUrl
                     )
                 }
 
@@ -65,7 +65,8 @@ class FriendRepository @Inject constructor(
                 val friend = Friend(
                     id = friendDto.email,
                     username = friendDto.nickname,
-                    profileImageUrl = null
+                    profileImageUrl = friendDto.profileImageUrl,
+                    friendshipDate = friendDto.friendshipDate
                 )
 
                 Result.Success(friend)
@@ -100,7 +101,8 @@ class FriendRepository @Inject constructor(
                     Friend(
                         id = dto.email,
                         username = dto.nickname,
-                        profileImageUrl = null
+                        profileImageUrl = dto.profileImageUrl,
+                        friendshipDate = dto.friendshipDate
                     )
                 }
 

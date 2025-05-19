@@ -48,11 +48,10 @@ fun AddFriendScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    // Effect to navigate after successfully sending a request
     LaunchedEffect(uiState.isRequestSent) {
         if (uiState.isRequestSent) {
             onFriendRequestSent()
-            // Reset state for future requests
+
             viewModel.resetState()
         }
     }
