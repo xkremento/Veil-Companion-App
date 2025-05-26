@@ -1,6 +1,7 @@
 package com.tfg.veilcompanionapp.data.api
 
 import com.google.gson.GsonBuilder
+import com.google.gson.Strictness
 import com.tfg.veilcompanionapp.data.api.interceptors.AuthInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -24,7 +25,7 @@ class RetrofitClient @Inject constructor(
             .readTimeout(30, TimeUnit.SECONDS).writeTimeout(30, TimeUnit.SECONDS).build()
 
         // Configure Gson to handle nulls properly
-        val gson = GsonBuilder().setLenient().create()
+        val gson = GsonBuilder().setStrictness(Strictness.LENIENT).create()
 
         // Create Retrofit client
         val retrofit = Retrofit.Builder().baseUrl(baseUrl).client(okHttpClient)
