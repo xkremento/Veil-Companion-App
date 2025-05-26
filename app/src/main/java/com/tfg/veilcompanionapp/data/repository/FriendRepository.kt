@@ -16,7 +16,7 @@ class FriendRepository @Inject constructor(
     suspend fun sendFriendRequest(friendEmail: String): Result<Long> {
         return try {
             val requestDto = CreateFriendRequestDTO(
-                requesterId = "", playerId = friendEmail
+                playerId = friendEmail
             )
 
             val response = apiService.sendFriendRequest(requestDto)

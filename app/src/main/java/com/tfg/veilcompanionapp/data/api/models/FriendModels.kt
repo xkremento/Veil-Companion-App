@@ -1,7 +1,7 @@
 package com.tfg.veilcompanionapp.data.api.models
 
 data class CreateFriendRequestDTO(
-    val requesterId: String, val playerId: String
+    val playerId: String
 )
 
 data class FriendRequestDTO(
