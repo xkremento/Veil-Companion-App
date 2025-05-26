@@ -50,13 +50,34 @@ com.tfg.veilcompanionapp/
 
 ## Screenshots
 
-![Splash Screen](assets/Splash.jpg)
-![Auth Screen](assets/Auth.jpg)
-![Register Screen](assets/Register.jpg)
-![Login Screen](assets/Login.jpg)
-![Home Screen](assets/Home.jpg)
-![Friends Screen](assets/Friends.jpg)
-![Friend Requests Screen](assets/FriendResquests.jpg)
+<p align="center">
+  <img src="assets/Splash.jpg" alt="Splash Screen" width="400"/>
+</p>
+
+<p align="center">
+  <img src="assets/Auth.jpg" alt="Auth Screen" width="400"/>
+</p>
+
+<p align="center">
+  <img src="assets/Register.jpg" alt="Register Screen" width="400"/>
+</p>
+
+<p align="center">
+  <img src="assets/Login.jpg" alt="Login Screen" width="400"/>
+</p>
+
+<p align="center">
+  <img src="assets/Home.jpg" alt="Home Screen" width="400"/>
+</p>
+
+<p align="center">
+  <img src="assets/Friends.jpg" alt="Friends Screen" width="400"/>
+</p>
+
+<p align="center">
+  <img src="assets/FriendResquests.jpg" alt="Friend Requests Screen" width="400"/>
+</p>
+
 
 ## Authors
 
