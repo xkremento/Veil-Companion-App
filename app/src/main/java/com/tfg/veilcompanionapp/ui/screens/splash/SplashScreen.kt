@@ -33,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.tfg.veilcompanionapp.R
 import com.tfg.veilcompanionapp.ui.theme.VeilBackgroundColor
 import com.tfg.veilcompanionapp.ui.theme.VeilTitleColor
+import com.tfg.veilcompanionapp.ui.theme.fontFamilyVeil
 
 @Composable
 fun SplashScreen(
@@ -86,7 +87,8 @@ fun SplashContent() {
                 fontSize = 130.sp,
                 fontWeight = FontWeight.Bold,
                 color = VeilTitleColor,
-                letterSpacing = 2.sp
+                letterSpacing = 2.sp,
+                fontFamily = fontFamilyVeil
             )
 
             HorizontalDivider(

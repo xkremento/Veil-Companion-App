@@ -25,6 +25,7 @@ import com.tfg.veilcompanionapp.R
 import com.tfg.veilcompanionapp.ui.components.AuthButton
 import com.tfg.veilcompanionapp.ui.theme.VeilBackgroundColor
 import com.tfg.veilcompanionapp.ui.theme.VeilTitleColor
+import com.tfg.veilcompanionapp.ui.theme.fontFamilyVeil
 
 @Composable
 fun AuthScreen(
@@ -46,7 +47,8 @@ fun AuthScreen(
                 fontSize = 130.sp,
                 fontWeight = FontWeight.Bold,
                 color = VeilTitleColor,
-                letterSpacing = 2.sp
+                letterSpacing = 2.sp,
+                fontFamily = fontFamilyVeil
             )
             HorizontalDivider(
                 modifier = Modifier.width(280.dp), thickness = 2.dp, color = Color.Gray
@@ -55,14 +57,16 @@ fun AuthScreen(
                 text = stringResource(R.string.subtitle),
                 fontSize = 45.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = Color.White,
+                fontFamily = fontFamilyVeil
             )
             Text(
                 text = stringResource(R.string.denomination),
                 fontSize = 15.sp,
                 fontStyle = FontStyle.Italic,
                 color = Color.LightGray,
-                modifier = Modifier.padding(top = 4.dp)
+                modifier = Modifier.padding(top = 4.dp),
+                fontFamily = fontFamilyVeil
             )
         }
 
