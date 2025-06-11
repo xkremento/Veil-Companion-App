@@ -102,7 +102,8 @@ fun SplashContent() {
                 text = stringResource(R.string.subtitle),
                 fontSize = 45.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = Color.White,
+                fontFamily = fontFamilyVeil
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -113,7 +114,8 @@ fun SplashContent() {
                 fontSize = 15.sp,
                 fontStyle = FontStyle.Italic,
                 color = Color.LightGray,
-                modifier = Modifier.padding(top = 4.dp)
+                modifier = Modifier.padding(top = 4.dp),
+                fontFamily = fontFamilyVeil
             )
         }
 
