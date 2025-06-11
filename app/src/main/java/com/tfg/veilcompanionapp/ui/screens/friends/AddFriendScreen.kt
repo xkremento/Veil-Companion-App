@@ -116,14 +116,16 @@ fun AddFriendContent(
                 Spacer(modifier = Modifier.weight(0.2f))
             }
 
-            // Add Friend Form
+            // Content section (takes up remaining space)
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Spacer(modifier = Modifier.height(48.dp))
+
                 // Info text
                 Text(
                     text = stringResource(R.string.add_friend_instruction),
@@ -131,7 +133,7 @@ fun AddFriendContent(
                     fontSize = 16.sp,
                     color = Color.White,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(bottom = 24.dp)
+                    modifier = Modifier.padding(bottom = 32.dp)
                 )
 
                 // Email field
@@ -142,30 +144,39 @@ fun AddFriendContent(
                     errorMessage = emailError,
                     imeAction = ImeAction.Done,
                     onImeAction = onSendRequestClick,
-                    modifier = Modifier.padding(bottom = 24.dp)
+                    modifier = Modifier.fillMaxWidth()
                 )
+            }
 
-                // Send Request button
+            // Bottom section with button and loading indicator
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (isLoading) {
+                    CircularProgressIndicator(
+                        color = VeilTitleColor,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+                }
+
+                // Send Request button - now at the bottom
                 Button(
                     onClick = onSendRequestClick,
                     enabled = !isLoading,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = VeilTitleColor, contentColor = Color.White
+                        containerColor = VeilTitleColor,
+                        contentColor = Color.White
                     ),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp)
                 ) {
                     Text(
                         text = stringResource(R.string.send_request_string),
                         fontFamily = fontFamilyVeil,
                         fontSize = 16.sp,
                         modifier = Modifier.padding(vertical = 8.dp)
-                    )
-                }
-
-                if (isLoading) {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    CircularProgressIndicator(
-                        color = VeilTitleColor
                     )
                 }
             }
