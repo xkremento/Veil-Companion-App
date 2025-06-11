@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
@@ -153,14 +154,14 @@ fun HomeContent(
                         Box(
                             modifier = Modifier
                                 .size(80.dp)
+                                .clip(CircleShape)
                                 .background(Color.White)
-                                .clip(RoundedCornerShape(4.dp))
                         ) {
                             if (uiState.profileImageUrl != null) {
                                 Image(
                                     painter = rememberAsyncImagePainter(uiState.profileImageUrl),
                                     contentDescription = stringResource(R.string.profile_image_string),
-                                    contentScale = ContentScale.Crop,
+                                    contentScale = ContentScale.Fit,
                                     modifier = Modifier.fillMaxSize()
                                 )
                             }

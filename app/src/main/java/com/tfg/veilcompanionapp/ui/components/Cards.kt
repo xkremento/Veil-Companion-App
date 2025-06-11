@@ -1,10 +1,15 @@
 package com.tfg.veilcompanionapp.ui.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -14,6 +19,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,6 +36,7 @@ fun GameHistoryCard(
     date: String,
     role: String,
     duration: String,
+    imageResource: Int = R.drawable.veil_tricked_logo,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -38,17 +46,16 @@ fun GameHistoryCard(
             containerColor = Color.White
         )
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            // ID and Date Row
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.Start
             ) {
-                // Game ID
                 Text(
                     text = "#${id}",
                     fontFamily = fontFamilyVeil,
@@ -56,101 +63,77 @@ fun GameHistoryCard(
                     color = Color.Gray
                 )
 
-                // Date
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = duration,
+                    fontFamily = fontFamilyVeil,
+                    fontSize = 16.sp,
+                    color = Color.Black
+                )
+            }
+
+            Box(
+                modifier = Modifier.weight(1f),
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(id = imageResource),
+                    contentDescription = "logo",
+                    modifier = Modifier.size(60.dp),
+                    contentScale = ContentScale.Fit
+                )
+            }
+
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.End
+            ) {
                 Text(
                     text = date,
                     fontFamily = fontFamilyVeil,
                     fontSize = 14.sp,
                     color = Color.Black
                 )
-            }
 
-            // Game Info Row
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 12.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Duration
-                Column(
-                    horizontalAlignment = Alignment.Start,
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text(
-                        text = stringResource(R.string.duration_string),
-                        fontFamily = fontFamilyVeil,
-                        fontSize = 12.sp,
-                        color = Color.Gray
-                    )
-                    Text(
-                        text = duration,
-                        fontFamily = fontFamilyVeil,
-                        fontSize = 16.sp,
-                        color = Color.Black
-                    )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Set role color based on role type
+                val roleColor = when (role) {
+                    "Asesino" -> Color.Red
+                    "Inocente" -> Color.Blue
+                    else -> VeilTitleColor // Default color
                 }
 
-                // Role
-                Column(
-                    horizontalAlignment = Alignment.End,
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text(
-                        text = stringResource(R.string.role_string),
-                        fontFamily = fontFamilyVeil,
-                        fontSize = 12.sp,
-                        color = Color.Gray,
-                        textAlign = TextAlign.End,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-
-                    // Set role color based on role type
-                    val roleColor = when (role) {
-                        "Asesino" -> Color.Red
-                        "Inocente" -> Color.Blue
-                        else -> VeilTitleColor // Default color
-                    }
-
-                    Text(
-                        text = role,
-                        fontFamily = fontFamilyVeil,
-                        fontSize = 16.sp,
-                        color = roleColor,
-                        textAlign = TextAlign.End,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
+                Text(
+                    text = role,
+                    fontFamily = fontFamilyVeil,
+                    fontSize = 16.sp,
+                    color = roleColor
+                )
             }
         }
     }
 }
 
-@Preview(showBackground = true, widthDp = 360)
+@Preview(showBackground = true)
 @Composable
-fun GameHistoryCardPreview() {
-    MaterialTheme {
-        GameHistoryCard(
-            id = 12345,
-            date = "01/01/1970",
-            role = "Asesino",
-            duration = "01:01",
-            modifier = Modifier.padding(16.dp)
-        )
-    }
+fun GameHistoryCardPreviewAssassin() {
+    GameHistoryCard(
+        id = 1,
+        date = "12/06/2025",
+        role = "Asesino",
+        duration = "5:30"
+    )
 }
 
-@Preview(showBackground = true, widthDp = 360)
+@Preview(showBackground = true)
 @Composable
-fun GameHistoryCardInnocentPreview() {
-    MaterialTheme {
-        GameHistoryCard(
-            id = 54321,
-            date = "01/01/1970",
-            role = "Inocente",
-            duration = "01:01",
-            modifier = Modifier.padding(16.dp)
-        )
-    }
+fun GameHistoryCardPreviewInnocent() {
+    GameHistoryCard(
+        id = 2,
+        date = "11/06/2025",
+        role = "Inocente",
+        duration = "8:15"
+    )
 }

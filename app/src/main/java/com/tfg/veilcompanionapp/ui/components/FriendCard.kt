@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -53,15 +54,17 @@ fun FriendCard(
             Box(
                 modifier = Modifier
                     .size(40.dp)
+                    .clip(CircleShape)
                     .background(Color.Gray)
-                    .clip(RoundedCornerShape(4.dp))
             ) {
                 if (friend.profileImageUrl != null) {
                     Image(
                         painter = rememberAsyncImagePainter(friend.profileImageUrl),
                         contentDescription = stringResource(R.string.profile_image_string),
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(CircleShape)
                     )
                 }
             }
