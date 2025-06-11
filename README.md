@@ -78,6 +78,9 @@ com.tfg.veilcompanionapp/
   <img src="assets/FriendResquests.jpg" alt="Friend Requests Screen" width="400"/>
 </p>
 
+<p align="center">
+  <img src="assets/AddFriendScreen.jpg" alt="Add Friend Screen" width="400"/>
+</p>
 
 ## Authors
 
