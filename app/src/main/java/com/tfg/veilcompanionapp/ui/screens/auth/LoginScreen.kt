@@ -122,7 +122,7 @@ fun LoginContent(
                 Spacer(modifier = Modifier.weight(0.2f))
             }
 
-            // Login Form
+            // Form fields in the center
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -149,18 +149,25 @@ fun LoginContent(
                     onImeAction = onLoginClick,
                     modifier = Modifier.padding(bottom = 24.dp)
                 )
+            }
 
-                // Login button
-                AuthButton(
-                    isLogin = true, onClick = onLoginClick, enabled = !isLoading
-                )
-
+            // Login button and loading indicator at the bottom
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 if (isLoading) {
-                    Spacer(modifier = Modifier.height(16.dp))
                     CircularProgressIndicator(
-                        color = VeilTitleColor
+                        color = VeilTitleColor,
+                        modifier = Modifier.padding(bottom = 16.dp)
                     )
                 }
+
+                AuthButton(
+                    isLogin = true,
+                    onClick = onLoginClick,
+                    enabled = !isLoading
+                )
             }
         }
 
