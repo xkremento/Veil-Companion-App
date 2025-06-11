@@ -116,7 +116,7 @@ fun AddFriendContent(
                 Spacer(modifier = Modifier.weight(0.2f))
             }
 
-            // Content section (takes up remaining space)
+            // Content section
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -160,7 +160,7 @@ fun AddFriendContent(
                     )
                 }
 
-                // Send Request button - now at the bottom
+                // Send Request button
                 Button(
                     onClick = onSendRequestClick,
                     enabled = !isLoading,
