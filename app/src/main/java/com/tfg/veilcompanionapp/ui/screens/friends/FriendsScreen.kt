@@ -5,18 +5,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -98,12 +96,13 @@ fun FriendsContent(
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            // Header
+            // Header con iconos
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 24.dp),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 // Back Button
                 BtnComponent(
@@ -123,14 +122,29 @@ fun FriendsContent(
                     modifier = Modifier.weight(1f)
                 )
 
-                // Empty space to balance the back button
-                Spacer(modifier = Modifier.weight(0.2f))
+                // Action buttons
+                Row {
+                    // Add Friend Icon
+                    BtnComponent(
+                        icon = Icons.Default.PersonAdd,
+                        contentDescription = stringResource(R.string.add_friend_string),
+                        onClick = onAddFriendClick
+                    )
+
+                    // Friend Requests Icon
+                    BtnComponent(
+                        icon = Icons.Default.Notifications,
+                        contentDescription = stringResource(R.string.requests_string),
+                        onClick = onFriendRequestsClick
+                    )
+                }
             }
 
             if (uiState.isLoading) {
                 // Loading Indicator
                 Box(
-                    modifier = Modifier.weight(1f), contentAlignment = Alignment.Center
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator(
                         color = VeilTitleColor
@@ -139,12 +153,13 @@ fun FriendsContent(
             } else {
                 // Friends List
                 LazyColumn(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     items(uiState.friends) { friend ->
                         FriendCard(
-                            friend = friend, onDeleteClick = onDeleteFriend
+                            friend = friend,
+                            onDeleteClick = onDeleteFriend
                         )
                     }
 
@@ -167,48 +182,6 @@ fun FriendsContent(
                             }
                         }
                     }
-                }
-            }
-
-            // Bottom Buttons
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                // Add Friend Button
-                Button(
-                    onClick = onAddFriendClick,
-                    shape = RoundedCornerShape(16.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.White, contentColor = Color.Black
-                    ),
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text(
-                        text = stringResource(R.string.add_friend_string),
-                        fontFamily = fontFamilyVeil,
-                        fontSize = 16.sp
-                    )
-                }
-
-                Spacer(modifier = Modifier.weight(0.1f))
-
-                // Friend Requests Button
-                Button(
-                    onClick = onFriendRequestsClick,
-                    shape = RoundedCornerShape(16.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.White, contentColor = Color.Black
-                    ),
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text(
-                        text = stringResource(R.string.requests_string),
-                        fontFamily = fontFamilyVeil,
-                        fontSize = 16.sp
-                    )
                 }
             }
         }
@@ -249,8 +222,8 @@ fun FriendsScreenPreview() {
     MaterialTheme {
         FriendsContent(
             uiState = FriendsUiState(
-            friends = sampleFriends
-        ),
+                friends = sampleFriends
+            ),
             onBackClick = {},
             onAddFriendClick = {},
             onFriendRequestsClick = {},
@@ -265,8 +238,8 @@ fun FriendsScreenEmptyPreview() {
     MaterialTheme {
         FriendsContent(
             uiState = FriendsUiState(
-            friends = emptyList()
-        ),
+                friends = emptyList()
+            ),
             onBackClick = {},
             onAddFriendClick = {},
             onFriendRequestsClick = {},
@@ -281,8 +254,8 @@ fun FriendsScreenLoadingPreview() {
     MaterialTheme {
         FriendsContent(
             uiState = FriendsUiState(
-            isLoading = true
-        ),
+                isLoading = true
+            ),
             onBackClick = {},
             onAddFriendClick = {},
             onFriendRequestsClick = {},
